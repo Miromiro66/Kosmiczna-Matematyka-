@@ -140,11 +140,21 @@
         ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
 
-        /* Styl dla drukowania (Dyplom) */
+        /* Styl dla drukowania (Dyplom Kosmiczny) */
         @media print {
+            @page { size: landscape; margin: 0; }
             body * { visibility: hidden; }
-            #diploma-print-area, #diploma-print-area * { visibility: visible; color: black !important; }
-            #diploma-print-area { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white !important; }
+            #diploma-print-area, #diploma-print-area * { visibility: visible; }
+            #diploma-print-area { 
+                position: absolute !important; left: 0 !important; top: 0 !important; 
+                width: 100vw !important; height: 100vh !important; 
+                display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; 
+                background-color: #05010f !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+            }
             .no-print { display: none !important; }
             #starfield { display: none !important; }
         }
@@ -379,16 +389,17 @@
         </div>
 
         <!-- ================= Ekran Błędów (Dziennik Pokładowy) ================= -->
-        <div id="error-summary-screen" class="hidden w-full max-w-2xl glass-panel p-8 sm:p-10 mx-auto">
+        <div id="error-summary-screen" class="hidden w-full max-w-2xl glass-panel p-8 sm:p-10 mx-auto mt-10">
             <h2 class="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-6 drop-shadow-[0_0_10px_rgba(232,121,249,0.8)] flex items-center justify-center gap-3">
                 <i class="fa-solid fa-book-journal-whills text-4xl"></i> <span data-i18n="logTitle">Dziennik Pokładowy</span>
             </h2>
             
-            <button onclick="printDiploma()" class="btn btn-orange w-full sm:w-2/3 mx-auto mb-6 py-3 border-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
+            <button onclick="printDiploma()" class="btn btn-orange w-full sm:w-2/3 mx-auto py-3 border-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
                 <i class="fa-solid fa-award"></i> <span data-i18n="print">Wydrukuj Kosmiczny Dyplom!</span>
             </button>
+            <div id="diploma-message" class="hidden text-red-400 font-bold text-center mt-3 mb-4 drop-shadow-md text-lg"></div>
 
-            <div id="error-list" class="space-y-4 text-lg text-white text-left max-h-72 overflow-y-auto p-4 rounded-[2rem] bg-indigo-950/30 border-2 border-fuchsia-500/40 shadow-inner backdrop-blur-sm">
+            <div id="error-list" class="space-y-4 text-lg text-white text-left max-h-72 overflow-y-auto p-4 rounded-[2rem] bg-indigo-950/30 border-2 border-fuchsia-500/40 shadow-inner backdrop-blur-sm mt-6">
                 <p class="text-indigo-300 font-bold text-center py-6" id="no-errors-message" data-i18n="noErrors">
                     <i class="fa-solid fa-meteor text-3xl mb-3 text-cyan-400 block animate-pulse"></i>
                     Brak wpisów o awariach.<br>Twoje obliczenia są bezbłędne!
@@ -403,57 +414,80 @@
                 </button>
             </div>
         </div>
-    </div>
 
-    <!-- ================= Score Summary Table (Na dole) ================= -->
-    <div id="score-summary" class="hidden w-full max-w-4xl glass-panel p-6 mb-8 relative z-10 no-print">
-        <h3 class="text-xl font-black text-white mb-4 text-center uppercase tracking-wider flex items-center justify-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-            <i class="fa-solid fa-medal text-yellow-400"></i> <span data-i18n="achievements">Osiągnięcia Misji</span>
-        </h3>
-        <div class="overflow-hidden rounded-2xl border-2 border-purple-500/40 bg-indigo-950/30 shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] backdrop-blur-sm">
-            <table class="w-full text-left text-indigo-100 font-bold border-collapse">
-                <thead class="bg-indigo-900/50">
-                    <tr>
-                        <th class="py-3 px-6 text-base border-b border-purple-500/40" data-i18n="sector">Sektor Obliczeń</th>
-                        <th class="py-3 px-6 text-right text-base border-b border-purple-500/40" data-i18n="stars">Zdobyte Gwiazdki</th>
-                    </tr>
-                </thead>
-                <tbody id="score-table-body" class="divide-y divide-purple-500/20">
-                    <!-- Wyniki będą tutaj generowane -->
-                </tbody>
-            </table>
+        <!-- ================= Score Summary Table (Na dole) ================= -->
+        <div id="score-summary" class="hidden w-full max-w-4xl glass-panel p-6 mb-8 relative z-10 no-print">
+            <h3 class="text-xl font-black text-white mb-4 text-center uppercase tracking-wider flex items-center justify-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                <i class="fa-solid fa-medal text-yellow-400"></i> <span data-i18n="achievements">Osiągnięcia Misji</span>
+            </h3>
+            <div class="overflow-hidden rounded-2xl border-2 border-purple-500/40 bg-indigo-950/30 shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+                <table class="w-full text-left text-indigo-100 font-bold border-collapse">
+                    <thead class="bg-indigo-900/50">
+                        <tr>
+                            <th class="py-3 px-6 text-base border-b border-purple-500/40" data-i18n="sector">Sektor Obliczeń</th>
+                            <th class="py-3 px-6 text-right text-base border-b border-purple-500/40" data-i18n="stars">Zdobyte Gwiazdki</th>
+                        </tr>
+                    </thead>
+                    <tbody id="score-table-body" class="divide-y divide-purple-500/20">
+                        <!-- Wyniki będą tutaj generowane -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <!-- Podpis Autora (Zawsze na dole ekranu) -->
-    <div class="mt-auto pt-4 pb-2 text-center no-print">
-        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-indigo-950/40 border border-fuchsia-500/20 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-wider text-indigo-200 shadow-[0_0_15px_rgba(0,0,0,0.3)] transition-all hover:bg-indigo-900/60 hover:scale-105 cursor-default">
-            <i class="fa-solid fa-satellite text-cyan-400 animate-pulse"></i>
-            <span data-i18n="commander">Dowódca misji (Autor):</span>
-            <span class="text-fuchsia-400 drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]">Mirosław Józef "Miras"</span>
+        <!-- Podpis Autora (Zawsze na dole ekranu) -->
+        <div class="mt-auto pt-4 pb-2 text-center no-print">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-indigo-950/40 border border-fuchsia-500/20 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-wider text-indigo-200 shadow-[0_0_15px_rgba(0,0,0,0.3)] transition-all hover:bg-indigo-900/60 hover:scale-105 cursor-default">
+                <i class="fa-solid fa-satellite text-cyan-400 animate-pulse"></i>
+                <span data-i18n="commander">Dowódca misji (Autor):</span>
+                <span class="text-fuchsia-400 drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]">Mirosław Józef "Miras"</span>
+            </div>
         </div>
-    </div>
 
-</div> <!-- Koniec app-container -->
+    </div> <!-- Koniec app-container -->
 
-    <!-- Ukryty szablon dyplomu do druku -->
-    <div id="diploma-print-area" class="hidden text-center p-10 bg-white w-full">
-        <div style="border: 15px solid #a855f7; border-radius: 20px; padding: 40px; margin: 20px;">
-            <h1 style="font-size: 3rem; color: #7e22ce; margin-bottom: 10px;" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
-            <h2 style="font-size: 1.5rem; color: #3b82f6; margin-top: 0;" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
+    <!-- Ukryty szablon dyplomu do druku (KOSMICZNY DESIGN) -->
+    <div id="diploma-print-area" class="hidden relative w-full h-full overflow-hidden bg-[#05010f]" style="background-color: #05010f; font-family: 'Nunito', sans-serif;">
+        <!-- Kosmiczne tło (zawsze się wydrukuje z print-color-adjust) -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2e0854_0%,_#05010f_100%)] opacity-90"></div>
+        
+        <!-- Ozdobne elementy w tle (Planety, Gwiazdy, Rakiety) -->
+        <i class="fa-solid fa-moon absolute top-12 left-12 text-cyan-400/40 text-7xl transform -rotate-12"></i>
+        <i class="fa-solid fa-rocket absolute bottom-16 left-20 text-orange-400/50 text-7xl transform rotate-45"></i>
+        <i class="fa-solid fa-meteor absolute top-20 right-24 text-yellow-400/50 text-7xl transform rotate-180"></i>
+        <i class="fa-solid fa-earth-americas absolute bottom-12 right-12 text-blue-500/40 text-8xl"></i>
+        <i class="fa-solid fa-star absolute top-1/4 left-1/3 text-yellow-200/60 text-2xl"></i>
+        <i class="fa-solid fa-star absolute bottom-1/3 right-1/4 text-yellow-200/60 text-3xl"></i>
+        <i class="fa-solid fa-user-astronaut absolute top-1/2 left-10 text-fuchsia-400/40 text-6xl transform -rotate-12"></i>
+        <i class="fa-solid fa-satellite absolute top-1/3 right-12 text-teal-400/40 text-6xl transform rotate-12"></i>
+
+        <!-- Główna zawartość dyplomu -->
+        <div class="relative z-10 w-[90%] max-w-5xl border-[8px] border-double border-yellow-500 rounded-[3rem] p-10 bg-indigo-950/80 shadow-[0_0_40px_rgba(168,85,247,0.4)] mx-auto mt-12 backdrop-blur-md">
+            <div class="text-center">
+                <i class="fa-solid fa-award text-yellow-400 text-6xl mb-4 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]"></i>
+                <h1 class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 tracking-widest uppercase drop-shadow-md mb-2" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
+                <h2 class="text-2xl sm:text-3xl font-bold text-cyan-300 uppercase tracking-widest drop-shadow-md" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
+            </div>
             
-            <p style="font-size: 1.2rem; margin-top: 40px;" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
-            <h2 id="print-rank" style="font-size: 2.5rem; color: #eab308; margin: 20px 0;">Kadet</h2>
+            <div class="text-center mt-8">
+                <p class="text-lg text-indigo-200 uppercase tracking-wider font-bold" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
+                <h2 id="print-rank" class="text-5xl font-black text-fuchsia-400 mt-4 mb-6 drop-shadow-[0_0_15px_rgba(232,121,249,0.8)] uppercase tracking-wide">Kadet</h2>
+                
+                <p class="text-lg text-indigo-200 uppercase tracking-wider font-bold" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
+                <h3 id="print-solved" class="text-5xl font-black text-emerald-400 mt-4 mb-6 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]">0</h3>
+            </div>
             
-            <p style="font-size: 1.2rem; margin-top: 30px;" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
-            <h3 id="print-solved" style="font-size: 2rem; color: #10b981; margin: 10px 0;">0</h3>
-            
-            <div style="margin-top: 50px; border-top: 2px solid #ccc; width: 50%; margin-left: auto; margin-right: auto; padding-top: 10px;">
-                <p style="font-size: 1rem; color: #666;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date"></span></p>
-                <p style="font-size: 0.9rem; color: #999;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
-                <p style="font-size: 0.8rem; color: #a855f7; margin-top: 20px; font-style: italic;">
-                    <span data-i18n="commander">Dowódca misji (Autor):</span> Mirosław Józef "Miras"
-                </p>
+            <div class="mt-8 pt-6 border-t-2 border-indigo-500/50 flex justify-between items-end px-4">
+                <div class="text-left">
+                    <p class="text-sm text-indigo-300 font-bold uppercase tracking-wider"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" class="text-white"></span></p>
+                    <p class="text-xs text-indigo-400 mt-1" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-indigo-300 italic font-bold">
+                        <i class="fa-solid fa-satellite text-cyan-400 mr-1"></i> <span data-i18n="commander">Dowódca misji (Autor):</span>
+                    </p>
+                    <p class="text-lg text-fuchsia-400 font-black tracking-wide">Mirosław Józef "Miras"</p>
+                </div>
             </div>
         </div>
     </div>
@@ -479,7 +513,8 @@
                 hintComp: "Podpowiedź: Policz zera albo użyj palców do porównania!", hintMul: "Podpowiedź: Pamiętaj, mnożenie to po prostu wielokrotne dodawanie.", hintDef: "Podpowiedź: Użyj kosmicznej energii (klocków) po prawej!",
                 timeOut: "Koniec Czasu! Misja zakończona.", typeValue: "Wpisz wartość!", combo: "(x2 KOMBO!)", streak: "Seria:", was: "Było:", given: "Podano:",
                 diplomaTitle1: "CERTYFIKAT", diplomaTitle2: "Kosmicznej Matematyki", diplomaText1: "Ten dyplom potwierdza, że posiadacz uzyskał rangę:", diplomaText2: "Rozwiązano poprawnie zadań:", diplomaText3: "Data misji:", diplomaText4: "Gratulacje od Dowództwa Galaktyki!",
-                commander: "Dowódca misji (Autor):"
+                commander: "Dowódca misji (Autor):",
+                minTasks: "Musisz ukończyć przynajmniej 1 misję, aby zdobyć dyplom!"
             },
             en: {
                 title: "Space Math!", add: "Addition", sub: "Subtraction", mul: "Multiplication", div: "Division", comp: "Greater / Less",
@@ -499,7 +534,8 @@
                 hintComp: "Hint: Count the zeros or use your fingers to compare!", hintMul: "Hint: Remember, multiplication is just repeated addition.", hintDef: "Hint: Use space energy (blocks) on the right!",
                 timeOut: "Time's up! Mission completed.", typeValue: "Enter a value!", combo: "(x2 COMBO!)", streak: "Streak:", was: "Was:", given: "Given:",
                 diplomaTitle1: "CERTIFICATE", diplomaTitle2: "of Space Math", diplomaText1: "This diploma confirms that the holder has achieved the rank of:", diplomaText2: "Correctly solved problems:", diplomaText3: "Mission date:", diplomaText4: "Congratulations from Galactic Command!",
-                commander: "Mission Commander (Author):"
+                commander: "Mission Commander (Author):",
+                minTasks: "You must complete at least 1 mission to get a diploma!"
             },
             is: {
                 title: "Geimstærðfræði!", add: "Samlagning", sub: "Frádráttur", mul: "Margföldun", div: "Deiling", comp: "Stærra / Minna",
@@ -519,7 +555,8 @@
                 hintComp: "Vísbending: Teldu núllin eða notaðu fingurna til að bera saman!", hintMul: "Vísbending: Mundu að margföldun er bara endurtekin samlagning.", hintDef: "Vísbending: Notaðu geimorkuna (blokkirnar) til hægri!",
                 timeOut: "Tíminn er runninn út! Verkefni lokið.", typeValue: "Sláðu inn gildi!", combo: "(x2 TVÖFALT!)", streak: "Röð:", was: "Var:", given: "Gefið:",
                 diplomaTitle1: "VIÐURKENNING", diplomaTitle2: "í Geimstærðfræði", diplomaText1: "Þetta prófskírteini staðfestir að handhafi hefur náð stöðunni:", diplomaText2: "Rétt leyst dæmi:", diplomaText3: "Dagsetning verkefnis:", diplomaText4: "Til hamingju frá Geimstjórninni!",
-                commander: "Leiðtogi leiðangurs (Höfundur):"
+                commander: "Leiðtogi leiðangurs (Höfundur):",
+                minTasks: "Þú verður að klára að minnsta kosti 1 leiðangur til að fá prófskírteini!"
             }
         };
 
@@ -1094,12 +1131,30 @@
         }
 
         function printDiploma() {
+            if (globalSolvedCount < 1) {
+                const msgEl = document.getElementById('diploma-message');
+                if (msgEl) {
+                    msgEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${i18n[currentLang].minTasks}`;
+                    msgEl.classList.remove('hidden');
+                    msgEl.classList.add('animate-tada');
+                    setTimeout(() => {
+                        msgEl.classList.remove('animate-tada');
+                        msgEl.classList.add('hidden');
+                    }, 3500);
+                }
+                return;
+            }
+
             document.getElementById('print-rank').textContent = getRankName();
             document.getElementById('print-solved').textContent = globalSolvedCount;
             const today = new Date();
             document.getElementById('print-date').textContent = today.toLocaleDateString();
             
-            window.print();
+            try {
+                window.print();
+            } catch (e) {
+                console.error("Drukuj nie działa w tym środowisku:", e);
+            }
         }
 
         // --- HIPERPRZESTRZEŃ (CANVAS STARFIELD) ---
