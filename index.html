@@ -140,16 +140,16 @@
         ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
 
-        /* --- WYMUSZONY WYGLĄD DYPLOMU PIONOWEGO (PORTRAIT) --- */
+        /* Wymuszony wygląd Dyplomu przy drukowaniu! */
         @media print {
-            @page { size: A4 portrait; margin: 0; }
+            @page { size: A4 landscape; margin: 0; }
             body * { visibility: hidden; }
             html, body {
                 width: 100% !important;
                 height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                background-color: #0b1120 !important;
+                background-color: #000 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
@@ -162,86 +162,45 @@
                 width: 100vw !important; 
                 height: 100vh !important; 
                 display: flex !important; 
-                justify-content: center !important; 
+                justify-content: flex-start !important; 
                 align-items: center !important; 
                 margin: 0 !important;
                 padding: 0 !important;
                 z-index: 9999 !important;
-                background-color: #0b1120 !important; /* Bardzo ciemny granatowy/prawie czarny */
-                font-family: 'Montserrat', sans-serif !important;
+                background-color: #000 !important;
             }
-            .print-diploma-border {
+            .print-bg-img {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                object-fit: cover !important;
+                z-index: -2 !important;
+            }
+            /* Cieniowanie tła żeby tekst był czytelny na lewej stronie, a prawa była odsłonięta na rakietę */
+            .print-bg-overlay {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background: linear-gradient(to right, rgba(5,1,15,0.95) 0%, rgba(5,1,15,0.9) 60%, rgba(5,1,15,0) 100%) !important;
+                z-index: -1 !important;
+            }
+            .print-diploma-content {
                 position: relative !important;
                 z-index: 10 !important;
-                width: 88% !important; 
-                height: 94% !important;
-                border: 3px solid #d4af37 !important; /* Złota ramka główna */
-                outline: 15px solid rgba(212, 175, 55, 0.1) !important; /* Poświata ramki */
-                outline-offset: -20px !important;
-                padding: 4rem 3rem !important;
+                width: 65% !important; 
+                height: 100% !important;
+                padding: 4rem 4rem !important;
                 display: flex !important;
                 flex-direction: column !important;
-                align-items: center !important;
+                justify-content: center !important;
                 box-sizing: border-box !important;
-                background: linear-gradient(180deg, #0f172a 0%, #020617 100%) !important; /* Oficjalne tło */
-                box-shadow: inset 0 0 100px rgba(0,0,0,0.8) !important;
-            }
-            .print-title {
-                font-family: 'Cinzel', serif !important;
-                font-size: 3.5rem !important;
-                font-weight: 900 !important;
-                color: #d4af37 !important; /* Złoty oficjalny kolor */
-                margin: 0 0 0.5rem 0 !important;
-                letter-spacing: 0.15em !important;
-            }
-            .print-subtitle {
-                font-family: 'Cinzel', serif !important;
-                font-size: 1.5rem !important;
-                font-weight: 700 !important;
-                color: #e2e8f0 !important; /* Jasny szary/srebrny */
-                text-transform: uppercase !important;
-                letter-spacing: 0.3em !important;
-                margin: 0 0 3rem 0 !important;
-                border-bottom: 1px solid #d4af37 !important;
-                padding-bottom: 1rem !important;
-                width: 80% !important;
-                text-align: center !important;
-            }
-            .print-text {
-                font-family: 'Montserrat', sans-serif !important;
-                color: #94a3b8 !important;
-                text-transform: uppercase !important;
-                letter-spacing: 2px !important;
-                font-size: 1rem !important;
-                margin: 1rem 0 !important;
-            }
-            .print-rank-value {
-                font-family: 'Cinzel', serif !important;
-                font-size: 3.5rem !important;
-                color: #f8fafc !important; /* Czysta biel */
-                margin: 1rem 0 3rem 0 !important;
-                letter-spacing: 0.1em !important;
-            }
-            .print-solved-value {
-                font-family: 'Cinzel', serif !important;
-                font-size: 4rem !important;
-                color: #d4af37 !important;
-                margin: 1rem 0 !important;
-            }
-            .print-footer {
-                width: 100% !important;
-                position: absolute !important;
-                bottom: 4rem !important;
-                padding: 0 4rem !important;
-                box-sizing: border-box !important;
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: flex-end !important;
-            }
-            .print-signature-line {
-                border-bottom: 1px solid #d4af37 !important;
-                width: 250px !important;
-                margin-bottom: 0.5rem !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
             }
             .no-print { display: none !important; }
             #starfield { display: none !important; }
@@ -482,7 +441,13 @@
                 <i class="fa-solid fa-book-journal-whills text-4xl"></i> <span data-i18n="logTitle">Dziennik Pokładowy</span>
             </h2>
             
-            <button onclick="printDiploma()" class="btn btn-orange w-full sm:w-2/3 mx-auto py-3 border-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
+            <!-- NOWE: Pole na wpisanie imienia nauczyciela -->
+            <div class="mb-6 mx-auto w-full sm:w-3/4">
+                <label for="commander-input" class="block text-indigo-200 font-bold mb-2" data-i18n="enterCommander">Wpisz imię Dowódcy Misji (Nauczyciela):</label>
+                <input type="text" id="commander-input" class="w-full text-center text-xl font-bold p-3 border-2 border-fuchsia-500/50 bg-indigo-950/60 rounded-xl focus:border-cyan-400 focus:outline-none transition-all shadow-inner text-white placeholder-indigo-400/50" placeholder="...">
+            </div>
+
+            <button onclick="printDiploma()" class="btn btn-orange w-full sm:w-3/4 mx-auto py-3 border-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
                 <i class="fa-solid fa-award"></i> <span data-i18n="print">Wydrukuj Kosmiczny Dyplom!</span>
             </button>
             <div id="diploma-message" class="hidden text-red-400 font-bold text-center mt-3 mb-4 drop-shadow-md text-lg"></div>
@@ -527,65 +492,58 @@
         <div class="mt-auto pt-4 pb-2 text-center no-print">
             <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-indigo-950/40 border border-fuchsia-500/20 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-wider text-indigo-200 shadow-[0_0_15px_rgba(0,0,0,0.3)] transition-all hover:bg-indigo-900/60 hover:scale-105 cursor-default">
                 <i class="fa-solid fa-satellite text-cyan-400 animate-pulse"></i>
-                <span data-i18n="commander">Dowódca misji (Autor):</span>
+                <span data-i18n="author">Autor aplikacji:</span>
                 <span class="text-fuchsia-400 drop-shadow-[0_0_8px_rgba(232,121,249,0.8)]">Mirosław Józef "Miras"</span>
             </div>
         </div>
 
     </div> <!-- Koniec app-container -->
 
-    <!-- ================= OFICJALNY, POWAŻNY DYPLOM (PIONOWY) ================= -->
+    <!-- ================= OFICJALNY, POWAŻNY DYPLOM (POZIOMY Z RAKIETĄ) ================= -->
     <div id="diploma-print-area" class="hidden">
+        <!-- Tło Rakieta SpaceX (obraz z Unsplash w wysokiej jakości) -->
+        <img class="print-bg-img" src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=1920&q=80" alt="Space Rocket Launch">
         
-        <div class="print-diploma-border">
-            
-            <!-- Logo NASA na górze certyfikatu -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" style="width: 130px; margin-bottom: 2rem; position: relative; z-index: 10;" alt="NASA Logo">
+        <!-- Ciemny gradient (overlay) żeby tekst po lewej stronie był w 100% czytelny -->
+        <div class="print-bg-overlay"></div>
 
-            <div style="text-align: center; margin-top: 1rem; width: 100%; position: relative; z-index: 10;">
-                <h1 class="print-title" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
-                <h2 class="print-subtitle" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
+        <!-- Ikona / Logo NASA u góry z prawej strony -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" style="position: absolute; top: 40px; right: 50px; width: 120px; z-index: 10;" alt="NASA Logo">
+
+        <div class="print-diploma-content">
+            <div style="text-align: left; margin-top: 1rem;">
+                <h1 style="font-family: 'Cinzel', serif !important; font-size: 3.5rem; font-weight: 900; color: #facc15 !important; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
+                <h2 style="font-family: 'Cinzel', serif !important; font-size: 1.8rem; font-weight: 700; color: #67e8f9 !important; text-transform: uppercase; letter-spacing: 0.2em; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
                 
-                <p class="print-text" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
-                <div id="print-rank" class="print-rank-value">Kadet</div>
+                <p style="font-family: 'Montserrat', sans-serif !important; font-size: 1.1rem; color: #c7d2fe !important; margin: 2rem 0 0.5rem 0; text-transform: uppercase; font-weight: bold;" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
+                <div id="print-rank" style="font-family: 'Cinzel', serif !important; font-size: 3rem; font-weight: 900; color: #e879f9 !important; text-transform: uppercase; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;">Kadet</div>
                 
-                <p class="print-text" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
-                <div id="print-solved" class="print-solved-value">0</div>
+                <p style="font-family: 'Montserrat', sans-serif !important; font-size: 1.1rem; color: #c7d2fe !important; margin: 0 0 0.5rem 0; text-transform: uppercase; font-weight: bold;" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
+                <div id="print-solved" style="font-family: 'Cinzel', serif !important; font-size: 4.5rem; font-weight: 900; color: #34d399 !important; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;">0</div>
             </div>
 
-            <div class="print-footer">
-                <div style="text-align: left;">
-                    <p class="print-text" style="font-weight: 700; color: #cbd5e1 !important;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" style="color: #f8fafc !important;"></span></p>
-                    <p class="print-text" style="font-size: 0.8rem !important; color: #64748b !important; text-transform: none !important;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
+            <!-- Podpisy i daty (Trzy kolumny) -->
+            <div style="margin-top: auto; border-top: 2px solid rgba(99, 102, 241, 0.5); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end;">
+                <!-- Lewa strona: Data -->
+                <div style="text-align: left; width: 33%;">
+                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 1rem; color: #a5b4fc !important; font-weight: bold; text-transform: uppercase; margin: 0;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" style="color: white !important;"></span></p>
+                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 0.9rem; color: #818cf8 !important; margin: 0.25rem 0 0 0;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
                 </div>
                 
-                <!-- Złoty Hologram Z Gwarancją Wydruku (SVG) -->
-                <div style="position: absolute; bottom: 3rem; right: 50%; transform: translateX(50%);">
-                    <svg style="width: 140px; height: 140px;" viewBox="0 0 100 100">
-                        <defs>
-                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#bf953f" />
-                                <stop offset="25%" stop-color="#fcf6ba" />
-                                <stop offset="50%" stop-color="#b38728" />
-                                <stop offset="75%" stop-color="#fbf5b7" />
-                                <stop offset="100%" stop-color="#aa771c" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Kształt wielokątny (pieczęć) -->
-                        <path d="M50 0 L55 15 L70 10 L65 25 L80 25 L75 40 L90 45 L80 55 L90 65 L75 70 L80 85 L65 80 L70 95 L55 90 L50 100 L45 90 L30 95 L35 80 L20 85 L25 70 L10 65 L20 55 L10 45 L25 40 L20 25 L35 25 L30 10 L45 15 Z" fill="url(#goldGradient)" stroke="#fff" stroke-width="1.5" />
-                        <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="3,2"/>
-                        <!-- Elementy wewnątrz pieczęci -->
-                        <text x="50" y="55" font-family="'Cinzel', serif" font-size="11" font-weight="900" fill="#5a3c00" text-anchor="middle" letter-spacing="1">OFFICIAL</text>
-                        <text x="50" y="42" font-family="'Cinzel', serif" font-size="22" font-weight="bold" fill="#5a3c00" text-anchor="middle">★</text>
-                    </svg>
+                <!-- Środek: Dowódca Misji (Nauczyciel) z pola input -->
+                <div style="text-align: center; width: 33%;">
+                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 0.9rem; color: #a5b4fc !important; font-style: italic; font-weight: bold; margin: 0 0 0.25rem 0;">
+                        <span data-i18n="commander">Dowódca misji:</span>
+                    </p>
+                    <p id="print-commander" style="font-family: 'Cinzel', serif !important; font-size: 1.3rem !important; color: #34d399 !important; font-weight: 700 !important; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;"></p>
                 </div>
 
-                <div style="text-align: right; z-index: 10;">
-                    <div class="print-signature-line"></div>
-                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 0.8rem !important; color: #d4af37 !important; margin: 0 !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-weight: 600 !important;">
-                        <span data-i18n="commander">Dowódca misji (Autor):</span>
+                <!-- Prawa strona: Autor Aplikacji (Miras) -->
+                <div style="text-align: right; width: 33%;">
+                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 0.9rem; color: #a5b4fc !important; font-style: italic; font-weight: bold; margin: 0 0 0.25rem 0;">
+                        <span data-i18n="author">Autor aplikacji:</span>
                     </p>
-                    <p style="font-family: 'Cinzel', serif !important; font-size: 1.3rem !important; color: #f8fafc !important; font-weight: 700 !important; margin: 0.5rem 0 0 0 !important;">Mirosław Józef "Miras"</p>
+                    <p style="font-family: 'Cinzel', serif !important; font-size: 1.3rem !important; color: #e879f9 !important; font-weight: 900 !important; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;">Mirosław Józef "Miras"</p>
                 </div>
             </div>
         </div>
@@ -612,7 +570,7 @@
                 hintComp: "Podpowiedź: Policz zera albo użyj palców do porównania!", hintMul: "Podpowiedź: Pamiętaj, mnożenie to po prostu wielokrotne dodawanie.", hintDef: "Podpowiedź: Użyj kosmicznej energii (klocków) po prawej!",
                 timeOut: "Koniec Czasu! Misja zakończona.", typeValue: "Wpisz wartość!", combo: "(x2 KOMBO!)", streak: "Seria:", was: "Było:", given: "Podano:",
                 diplomaTitle1: "CERTYFIKAT", diplomaTitle2: "Kosmicznej Matematyki", diplomaText1: "Ten dyplom potwierdza, że posiadacz uzyskał rangę:", diplomaText2: "Rozwiązano poprawnie zadań:", diplomaText3: "Data misji:", diplomaText4: "Gratulacje od Dowództwa Galaktyki!",
-                commander: "Dowódca misji (Autor):",
+                commander: "Dowódca misji:", author: "Autor aplikacji:", enterCommander: "Wpisz imię Dowódcy Misji (np. Nauczyciela):",
                 minTasks: "Musisz ukończyć przynajmniej 1 misję, aby zdobyć dyplom!"
             },
             en: {
@@ -633,7 +591,7 @@
                 hintComp: "Hint: Count the zeros or use your fingers to compare!", hintMul: "Hint: Remember, multiplication is just repeated addition.", hintDef: "Hint: Use space energy (blocks) on the right!",
                 timeOut: "Time's up! Mission completed.", typeValue: "Enter a value!", combo: "(x2 COMBO!)", streak: "Streak:", was: "Was:", given: "Given:",
                 diplomaTitle1: "CERTIFICATE", diplomaTitle2: "of Space Math", diplomaText1: "This diploma confirms that the holder has achieved the rank of:", diplomaText2: "Correctly solved problems:", diplomaText3: "Mission date:", diplomaText4: "Congratulations from Galactic Command!",
-                commander: "Mission Commander (Author):",
+                commander: "Mission Commander:", author: "Application Author:", enterCommander: "Enter Mission Commander's name (e.g. Teacher):",
                 minTasks: "You must complete at least 1 mission to get a diploma!"
             },
             is: {
@@ -654,7 +612,7 @@
                 hintComp: "Vísbending: Teldu núllin eða notaðu fingurna til að bera saman!", hintMul: "Vísbending: Mundu að margföldun er bara endurtekin samlagning.", hintDef: "Vísbending: Notaðu geimorkuna (blokkirnar) til hægri!",
                 timeOut: "Tíminn er runninn út! Verkefni lokið.", typeValue: "Sláðu inn gildi!", combo: "(x2 TVÖFALT!)", streak: "Röð:", was: "Var:", given: "Gefið:",
                 diplomaTitle1: "VIÐURKENNING", diplomaTitle2: "í Geimstærðfræði", diplomaText1: "Þetta prófskírteini staðfestir að handhafi hefur náð stöðunni:", diplomaText2: "Rétt leyst dæmi:", diplomaText3: "Dagsetning verkefnis:", diplomaText4: "Til hamingju frá Geimstjórninni!",
-                commander: "Leiðtogi leiðangurs (Höfundur):",
+                commander: "Leiðtogi leiðangurs:", author: "Höfundur forritsins:", enterCommander: "Sláðu inn nafn Leiðtoga leiðangurs (t.d. Kennari):",
                 minTasks: "Þú verður að klára að minnsta kosti 1 leiðangur til að fá prófskírteini!"
             }
         };
@@ -1244,8 +1202,15 @@
                 return;
             }
 
+            // Pobieranie imienia nauczyciela z pola tekstowego
+            let commanderInput = document.getElementById('commander-input').value.trim();
+            if (!commanderInput) {
+                commanderInput = "________________________"; // Puste miejsce na podpis
+            }
+
             document.getElementById('print-rank').textContent = getRankName();
             document.getElementById('print-solved').textContent = globalSolvedCount;
+            document.getElementById('print-commander').textContent = commanderInput;
             const today = new Date();
             document.getElementById('print-date').textContent = today.toLocaleDateString();
             
