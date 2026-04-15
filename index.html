@@ -140,20 +140,56 @@
         ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
 
-        /* Styl dla drukowania (Dyplom Kosmiczny) */
+        /* Wymuszony wygląd Dyplomu przy drukowaniu! */
         @media print {
-            @page { size: landscape; margin: 0; }
+            @page { size: A4 landscape; margin: 0; }
             body * { visibility: hidden; }
-            #diploma-print-area, #diploma-print-area * { visibility: visible; }
-            #diploma-print-area { 
-                position: absolute !important; left: 0 !important; top: 0 !important; 
-                width: 100vw !important; height: 100vh !important; 
-                display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; 
-                background-color: #05010f !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
+            html, body {
+                width: 100% !important;
+                height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                background-color: #05010f !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            #diploma-print-area, #diploma-print-area * { visibility: visible; }
+            #diploma-print-area { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100vw !important; 
+                height: 100vh !important; 
+                display: flex !important; 
+                justify-content: center !important; 
+                align-items: center !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                z-index: 9999 !important;
+            }
+            .print-bg-svg {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                z-index: -1 !important;
+            }
+            .print-diploma-content {
+                position: relative !important;
+                z-index: 10 !important;
+                width: 85% !important;
+                height: 80% !important;
+                border: 12px double #eab308 !important;
+                border-radius: 40px !important;
+                padding: 3rem !important;
+                display: flex !important;
+                flex-direction: column !important;
+                box-sizing: border-box !important;
+                /* Wymuszenie koloru panela dyplomu (trick z cieniem) */
+                background-color: #110c2e !important;
+                box-shadow: inset 0 0 0 1000px #110c2e !important;
             }
             .no-print { display: none !important; }
             #starfield { display: none !important; }
@@ -447,46 +483,73 @@
     </div> <!-- Koniec app-container -->
 
     <!-- Ukryty szablon dyplomu do druku (KOSMICZNY DESIGN) -->
-    <div id="diploma-print-area" class="hidden relative w-full h-full overflow-hidden bg-[#05010f]" style="background-color: #05010f; font-family: 'Nunito', sans-serif;">
-        <!-- Kosmiczne tło (zawsze się wydrukuje z print-color-adjust) -->
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2e0854_0%,_#05010f_100%)] opacity-90"></div>
-        
-        <!-- Ozdobne elementy w tle (Planety, Gwiazdy, Rakiety) -->
-        <i class="fa-solid fa-moon absolute top-12 left-12 text-cyan-400/40 text-7xl transform -rotate-12"></i>
-        <i class="fa-solid fa-rocket absolute bottom-16 left-20 text-orange-400/50 text-7xl transform rotate-45"></i>
-        <i class="fa-solid fa-meteor absolute top-20 right-24 text-yellow-400/50 text-7xl transform rotate-180"></i>
-        <i class="fa-solid fa-earth-americas absolute bottom-12 right-12 text-blue-500/40 text-8xl"></i>
-        <i class="fa-solid fa-star absolute top-1/4 left-1/3 text-yellow-200/60 text-2xl"></i>
-        <i class="fa-solid fa-star absolute bottom-1/3 right-1/4 text-yellow-200/60 text-3xl"></i>
-        <i class="fa-solid fa-user-astronaut absolute top-1/2 left-10 text-fuchsia-400/40 text-6xl transform -rotate-12"></i>
-        <i class="fa-solid fa-satellite absolute top-1/3 right-12 text-teal-400/40 text-6xl transform rotate-12"></i>
+    <div id="diploma-print-area" class="hidden">
+        <!-- SVG TŁO Z GWARANCJĄ WYDRUKU (Obrazek Vectorowy) -->
+        <svg class="print-bg-svg" xmlns="http://www.w3.org/2000/svg">
+             <defs>
+                 <radialGradient id="printBgGrad" cx="50%" cy="50%" r="75%">
+                     <stop offset="0%" stop-color="#2e0854"/>
+                     <stop offset="100%" stop-color="#05010f"/>
+                 </radialGradient>
+             </defs>
+             <rect width="100%" height="100%" fill="url(#printBgGrad)"/>
 
-        <!-- Główna zawartość dyplomu -->
-        <div class="relative z-10 w-[90%] max-w-5xl border-[8px] border-double border-yellow-500 rounded-[3rem] p-10 bg-indigo-950/80 shadow-[0_0_40px_rgba(168,85,247,0.4)] mx-auto mt-12 backdrop-blur-md">
-            <div class="text-center">
-                <i class="fa-solid fa-award text-yellow-400 text-6xl mb-4 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]"></i>
-                <h1 class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 tracking-widest uppercase drop-shadow-md mb-2" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
-                <h2 class="text-2xl sm:text-3xl font-bold text-cyan-300 uppercase tracking-widest drop-shadow-md" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
-            </div>
-            
-            <div class="text-center mt-8">
-                <p class="text-lg text-indigo-200 uppercase tracking-wider font-bold" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
-                <h2 id="print-rank" class="text-5xl font-black text-fuchsia-400 mt-4 mb-6 drop-shadow-[0_0_15px_rgba(232,121,249,0.8)] uppercase tracking-wide">Kadet</h2>
+             <!-- Gwiazdy -->
+             <g fill="#ffffff" opacity="0.8">
+                 <circle cx="10%" cy="15%" r="2"/><circle cx="20%" cy="45%" r="1.5"/><circle cx="30%" cy="85%" r="2.5"/><circle cx="45%" cy="25%" r="1"/><circle cx="65%" cy="70%" r="2"/><circle cx="80%" cy="10%" r="3"/><circle cx="90%" cy="60%" r="1.5"/><circle cx="5%" cy="80%" r="2"/><circle cx="50%" cy="90%" r="1.5"/><circle cx="75%" cy="35%" r="2"/>
+             </g>
+             <g fill="#facc15" opacity="0.6">
+                 <circle cx="15%" cy="65%" r="3"/><circle cx="85%" cy="85%" r="2.5"/><circle cx="60%" cy="15%" r="2"/><circle cx="35%" cy="55%" r="1.5"/>
+             </g>
+             <g fill="#22d3ee" opacity="0.6">
+                 <circle cx="25%" cy="25%" r="2"/><circle cx="70%" cy="80%" r="3"/><circle cx="85%" cy="40%" r="1.5"/><circle cx="40%" cy="10%" r="2"/>
+             </g>
+
+             <!-- Planety (Ziemia) -->
+             <circle cx="88%" cy="82%" r="80" fill="#1e3a8a" opacity="0.6" />
+             <circle cx="88%" cy="82%" r="75" fill="#3b82f6" opacity="0.5" />
+             
+             <!-- Księżyc -->
+             <circle cx="12%" cy="18%" r="45" fill="#475569" opacity="0.6" />
+             <circle cx="12%" cy="18%" r="40" fill="#94a3b8" opacity="0.5" />
+             <circle cx="10%" cy="15%" r="5" fill="#cbd5e1" opacity="0.4" />
+             <circle cx="14%" cy="22%" r="8" fill="#cbd5e1" opacity="0.4" />
+        </svg>
+
+        <!-- Dekoracje FontAwesome pozycjonowane absolutnie nad tłem -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden;">
+            <i class="fa-solid fa-rocket" style="position: absolute; bottom: 15%; left: 18%; font-size: 8rem; color: #fb923c !important; transform: rotate(45deg); opacity: 0.8;"></i>
+            <i class="fa-solid fa-meteor" style="position: absolute; top: 18%; right: 20%; font-size: 7rem; color: #facc15 !important; transform: rotate(180deg); opacity: 0.8;"></i>
+            <i class="fa-solid fa-user-astronaut" style="position: absolute; top: 45%; left: 8%; font-size: 6rem; color: #e879f9 !important; transform: rotate(-15deg); opacity: 0.7;"></i>
+            <i class="fa-solid fa-satellite" style="position: absolute; top: 25%; right: 8%; font-size: 5rem; color: #2dd4bf !important; transform: rotate(15deg); opacity: 0.7;"></i>
+            <i class="fa-solid fa-star" style="position: absolute; top: 30%; left: 35%; font-size: 2rem; color: #fef08a !important; opacity: 0.8;"></i>
+            <i class="fa-solid fa-star" style="position: absolute; bottom: 35%; right: 30%; font-size: 2.5rem; color: #fef08a !important; opacity: 0.8;"></i>
+            <i class="fa-solid fa-star" style="position: absolute; top: 15%; left: 60%; font-size: 1.5rem; color: #fef08a !important; opacity: 0.8;"></i>
+        </div>
+
+        <div class="print-diploma-content">
+            <div style="text-align: center; margin-top: 1rem;">
+                <i class="fa-solid fa-award" style="font-size: 5rem; color: #facc15 !important; margin-bottom: 1rem;"></i>
+                <h1 style="font-size: 4rem; font-weight: 900; color: #facc15 !important; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
+                <h2 style="font-size: 2rem; font-weight: 700; color: #67e8f9 !important; text-transform: uppercase; letter-spacing: 0.2em; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5) !important;" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
                 
-                <p class="text-lg text-indigo-200 uppercase tracking-wider font-bold" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
-                <h3 id="print-solved" class="text-5xl font-black text-emerald-400 mt-4 mb-6 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]">0</h3>
+                <p style="font-size: 1.25rem; color: #c7d2fe !important; margin: 0 0 0.5rem 0; text-transform: uppercase;" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
+                <div id="print-rank" style="font-size: 3rem; font-weight: 900; color: #e879f9 !important; text-transform: uppercase; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5) !important;">Kadet</div>
+                
+                <p style="font-size: 1.25rem; color: #c7d2fe !important; margin: 0 0 0.5rem 0; text-transform: uppercase;" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
+                <div id="print-solved" style="font-size: 4rem; font-weight: 900; color: #34d399 !important; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5) !important;">0</div>
             </div>
-            
-            <div class="mt-8 pt-6 border-t-2 border-indigo-500/50 flex justify-between items-end px-4">
-                <div class="text-left">
-                    <p class="text-sm text-indigo-300 font-bold uppercase tracking-wider"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" class="text-white"></span></p>
-                    <p class="text-xs text-indigo-400 mt-1" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
+
+            <div style="margin-top: auto; border-top: 2px solid #6366f1; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="text-align: left;">
+                    <p style="font-size: 1rem; color: #a5b4fc !important; font-weight: bold; text-transform: uppercase; margin: 0;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" style="color: white !important;"></span></p>
+                    <p style="font-size: 0.9rem; color: #818cf8 !important; margin: 0.25rem 0 0 0;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
                 </div>
-                <div class="text-right">
-                    <p class="text-xs text-indigo-300 italic font-bold">
-                        <i class="fa-solid fa-satellite text-cyan-400 mr-1"></i> <span data-i18n="commander">Dowódca misji (Autor):</span>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.9rem; color: #a5b4fc !important; font-style: italic; font-weight: bold; margin: 0 0 0.25rem 0;">
+                        <i class="fa-solid fa-satellite" style="color: #22d3ee !important; margin-right: 0.25rem;"></i> <span data-i18n="commander">Dowódca misji (Autor):</span>
                     </p>
-                    <p class="text-lg text-fuchsia-400 font-black tracking-wide">Mirosław Józef "Miras"</p>
+                    <p style="font-size: 1.2rem; color: #e879f9 !important; font-weight: 900; margin: 0;">Mirosław Józef "Miras"</p>
                 </div>
             </div>
         </div>
@@ -1178,32 +1241,27 @@
                     x: Math.random() * 6000 - 3000, 
                     y: Math.random() * 6000 - 3000, 
                     z: Math.random() * 2000,
-                    // Różne kolory: fuksja, turkus i biały
                     color: Math.random() > 0.8 ? '#a855f7' : (Math.random() > 0.6 ? '#22d3ee' : '#ffffff') 
                 });
             }
 
             function animateStarfield() {
-                // Całkowite wyczyszczenie klatki przywraca poprawne zachowanie scrollowania i przezroczystości
                 ctx.clearRect(0, 0, width, height);
 
                 const cx = width / 2;
                 const cy = height / 2;
 
-                // PRĘDKOŚĆ ŚWIATŁA!
                 let currentSpeed = streak >= 3 ? 18 : 2.5;
 
                 for (let star of stars) {
                     star.z -= currentSpeed;
                     
-                    // Reset, jeśli gwiazda wyleci za ekran
                     if (star.z <= 0) {
                         star.x = Math.random() * 6000 - 3000;
                         star.y = Math.random() * 6000 - 3000;
                         star.z = 2000;
                     }
 
-                    // Rzutowanie perspektywiczne 3D -> 2D
                     const px = cx + (star.x / star.z) * 800;
                     const py = cy + (star.y / star.z) * 800;
                     
