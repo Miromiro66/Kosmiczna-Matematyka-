@@ -13,47 +13,22 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style type="text/tailwindcss">
-        html {
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
             background-color: #05010f;
         }
 
         body {
-            margin: 0;
-            padding: 1.5rem;
             font-family: 'Nunito', sans-serif;
-            background: radial-gradient(circle at center, #2e0854 0%, #05010f 100%);
-            background-attachment: fixed;
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            padding: 1.5rem;
             overflow-x: hidden;
-        }
-
-        /* --- Kosmiczne Gwiazdy (Tło) --- */
-        .stars-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 200px 50px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 250px 150px, #ffffff, rgba(0,0,0,0));
-            background-repeat: repeat;
-            background-size: 300px 300px;
-            animation: twinkle 5s infinite alternate;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        @keyframes twinkle { 
-            0% { opacity: 0.3; transform: scale(1); } 
-            100% { opacity: 0.8; transform: scale(1.02); } 
         }
 
         /* Ciemny, neonowy Glassmorphism */
@@ -176,8 +151,7 @@
 <body>
 
     <!-- Dynamiczne Tło Hiperprzestrzeni (Canvas) -->
-    <!-- Zmiana w-screen h-screen na w-full h-full oraz usunięcie ukrytych konfliktów CSS -->
-    <canvas id="starfield" class="fixed inset-0 w-full h-full -z-10 no-print" style="pointer-events: none;"></canvas>
+    <canvas id="starfield" class="fixed top-0 left-0 w-screen h-screen -z-10 no-print" style="pointer-events: none;"></canvas>
 
     <!-- Wybór Języka (Zawsze widoczny) -->
     <div class="fixed top-4 right-4 z-50 flex gap-2 items-center bg-indigo-950/30 p-2 rounded-full border border-fuchsia-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-sm no-print">
@@ -193,10 +167,10 @@
     </div>
 
     <!-- Główny kontener aplikacji -->
-    <div id="app-container" class="w-full max-w-[1200px] text-center flex flex-col items-center justify-center gap-6 mb-6 relative z-10 no-print">
+    <div id="app-container" class="w-full max-w-[1200px] text-center flex flex-col items-center justify-center gap-6 mb-6 mt-4 relative z-10 no-print">
 
         <!-- ================= Menu Screen ================= -->
-        <div id="menu-screen" class="w-full max-w-4xl glass-panel p-6 sm:p-10 mt-10">
+        <div id="menu-screen" class="w-full max-w-4xl glass-panel p-6 sm:p-10">
             <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]">
                 <i class="fa-solid fa-rocket text-fuchsia-400 mr-2 mb-4 block sm:inline animate-pulse"></i>
                 <span data-i18n="title">Kosmiczna Matematyka!</span>
@@ -241,7 +215,7 @@
         </div>
 
         <!-- ================= Difficulty Screen ================= -->
-        <div id="difficulty-screen" class="hidden w-full max-w-2xl glass-panel p-6 sm:p-10 mt-10">
+        <div id="difficulty-screen" class="hidden w-full max-w-2xl glass-panel p-6 sm:p-10">
             <h2 class="text-3xl sm:text-4xl font-black text-white mb-6 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] flex items-center justify-center gap-3">
                 <i class="fa-solid fa-layer-group text-cyan-400"></i> <span data-i18n="chooseLevel">Wybierz Poziom</span>
             </h2>
@@ -277,7 +251,7 @@
         </div>
 
         <!-- ================= Rules Screen ================= -->
-        <div id="rules-screen" class="hidden w-full max-w-3xl glass-panel p-6 sm:p-10 text-left mx-auto mt-10">
+        <div id="rules-screen" class="hidden w-full max-w-3xl glass-panel p-6 sm:p-10 text-left mx-auto">
             <h2 class="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] text-center flex items-center justify-center gap-3">
                 <i class="fa-solid fa-scroll text-cyan-400"></i> <span data-i18n="rulesTitle">Zasady Misji</span>
             </h2>
@@ -294,7 +268,7 @@
         </div>
 
         <!-- ================= Game Screen and Blocks Wrapper ================= -->
-        <div id="game-and-blocks-wrapper" class="hidden w-full flex flex-col md:flex-row items-center md:items-stretch justify-center gap-6 mt-10">
+        <div id="game-and-blocks-wrapper" class="hidden w-full flex flex-col md:flex-row items-center md:items-stretch justify-center gap-6">
             
             <!-- Ekran Gry (Lewa Strona) -->
             <div id="game-screen" class="w-full md:w-1/2 flex flex-col">
@@ -328,7 +302,7 @@
                         <!-- Title and icon injected via JS -->
                     </h2>
 
-                    <div id="problem" class="flex justify-center items-center gap-3 text-5xl sm:text-6xl font-black text-white bg-transparent border-4 border-purple-500/50 p-6 rounded-[2.5rem] my-2 shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-md">
+                    <div id="problem" class="flex justify-center items-center gap-3 text-5xl sm:text-6xl font-black text-white bg-indigo-950/20 border-4 border-purple-500/50 p-6 rounded-[2.5rem] my-2 shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-sm">
                         <span id="num1" class="drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
                         <span id="operator" class="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"></span>
                         <span id="num2" class="drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
@@ -336,7 +310,7 @@
                     </div>
                     
                     <div id="numeric-input-section" class="mb-4 flex-grow">
-                        <input type="number" id="answer-input" class="w-full text-center text-4xl font-black p-3 border-4 border-indigo-500 bg-white/5 rounded-full focus:border-cyan-400 focus:bg-white/10 focus:shadow-[0_0_25px_rgba(34,211,238,0.6)] focus:outline-none transition-all shadow-inner text-cyan-300 placeholder-indigo-400/50 backdrop-blur-sm" placeholder="?">
+                        <input type="number" id="answer-input" class="w-full text-center text-4xl font-black p-3 border-4 border-indigo-500 bg-indigo-950/30 rounded-full focus:border-cyan-400 focus:bg-indigo-900/60 focus:shadow-[0_0_25px_rgba(34,211,238,0.6)] focus:outline-none transition-all shadow-inner text-cyan-300 placeholder-indigo-400/50" placeholder="?">
                     </div>
                     
                     <div id="comparison-buttons" class="hidden mb-4 grid grid-cols-3 gap-3 flex-grow">
@@ -386,12 +360,12 @@
                     </div>
 
                     <!-- Obszar Wyświetlania -->
-                    <div class="w-full flex-grow min-h-[160px] bg-transparent border-4 border-dashed border-cyan-500/50 rounded-[2rem] p-3 flex gap-3 overflow-hidden relative shadow-[inset_0_0_20px_rgba(34,211,238,0.1)] backdrop-blur-sm">
+                    <div class="w-full flex-grow min-h-[160px] bg-indigo-950/30 border-4 border-dashed border-cyan-500/50 rounded-[2rem] p-3 flex gap-3 overflow-hidden relative shadow-[inset_0_0_20px_rgba(34,211,238,0.1)]">
                         <div id="tens-container" class="flex flex-wrap-reverse items-end content-end gap-1 min-w-[20px] border-r-2 border-purple-500/50 pr-3"></div>
                         <div id="ones-container" class="flex flex-wrap-reverse items-end content-end gap-1 min-w-[20px] max-w-[150px]"></div>
                     </div>
 
-                    <div class="mt-4 text-lg font-bold text-indigo-100 bg-indigo-900/10 px-5 py-2 rounded-full shadow-inner border-2 border-indigo-500/30 backdrop-blur-md">
+                    <div class="mt-4 text-lg font-bold text-indigo-200 bg-indigo-900/30 px-5 py-2 rounded-full shadow-inner border-2 border-indigo-500/50 backdrop-blur-sm">
                         <span data-i18n="energyLevel">Energia:</span> <span id="blocks-total" class="text-3xl text-cyan-400 ml-2 font-black drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">0</span>
                     </div>
 
@@ -403,7 +377,7 @@
         </div>
 
         <!-- ================= Ekran Błędów (Dziennik Pokładowy) ================= -->
-        <div id="error-summary-screen" class="hidden w-full max-w-2xl glass-panel p-8 sm:p-10 mx-auto mt-10">
+        <div id="error-summary-screen" class="hidden w-full max-w-2xl glass-panel p-8 sm:p-10 mx-auto">
             <h2 class="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-6 drop-shadow-[0_0_10px_rgba(232,121,249,0.8)] flex items-center justify-center gap-3">
                 <i class="fa-solid fa-book-journal-whills text-4xl"></i> <span data-i18n="logTitle">Dziennik Pokładowy</span>
             </h2>
@@ -530,11 +504,12 @@
             }
         };
 
-        let currentLang = 'pl';
+        let currentLang = 'pl'; // Domyślny język
 
         function setLang(lang) {
             currentLang = lang;
             
+            // Podmiana tekstów ze znacznikami data-i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (i18n[lang][key]) {
@@ -542,6 +517,7 @@
                 }
             });
 
+            // Podmiana tekstów dla title
             document.querySelectorAll('[data-i18n-title]').forEach(el => {
                 const key = el.getAttribute('data-i18n-title');
                 if (i18n[lang][key]) {
@@ -549,6 +525,7 @@
                 }
             });
 
+            // Aktualizacja stylów przycisków języka
             ['pl', 'is', 'en'].forEach(l => {
                 const btn = document.getElementById(`lang-btn-${l}`);
                 if (btn) {
@@ -562,10 +539,12 @@
                 }
             });
 
+            // Odświeżenie dynamicznych części UI
             updateRankDisplay();
             updateScoreTable();
             populateErrorList();
             
+            // Jeśli gramy, aktualizujemy nazwę operacji nad równaniem
             const gameAndBlocksWrapper = document.getElementById('game-and-blocks-wrapper');
             if (gameAndBlocksWrapper && !gameAndBlocksWrapper.classList.contains('hidden') && currentOperation !== '') {
                 const operationTitle = document.getElementById('operation-title');
@@ -707,7 +686,7 @@
                 updateBlocksVisuals(); 
             } else if (tensCount > 0) {
                 tensCount--;
-                onesCount += 9;
+                onesCount += 9; // Pożyczamy jedną dziesiątkę (odejmujemy 1 z pożyczonych 10, czyli dodajemy 9)
                 updateBlocksVisuals();
             }
         }
@@ -1115,11 +1094,13 @@
             const ctx = canvas.getContext('2d');
             let width, height;
             let stars = [];
-            const numStars = 1200; // Zwiększona ilość gwiazd na szerszy obszar
+            const numStars = 1200; // Zwiększona liczba gwiazd na większy obszar
 
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
+                ctx.fillStyle = '#05010f';
+                ctx.fillRect(0, 0, width, height);
             }
             window.addEventListener('resize', resize);
             resize();
@@ -1127,8 +1108,8 @@
             // Tworzymy gwiazdy (x, y to pozycje 3D, z to głębia)
             for (let i = 0; i < numStars; i++) {
                 stars.push({
-                    x: Math.random() * 6000 - 3000, 
-                    y: Math.random() * 6000 - 3000, 
+                    x: Math.random() * 6000 - 3000, // Zwiększony zakres dla szerokich ekranów
+                    y: Math.random() * 6000 - 3000, // Zwiększony zakres
                     z: Math.random() * 2000,
                     // Różne kolory: fuksja, turkus i biały
                     color: Math.random() > 0.8 ? '#a855f7' : (Math.random() > 0.6 ? '#22d3ee' : '#ffffff') 
@@ -1136,8 +1117,9 @@
             }
 
             function animateStarfield() {
-                // Całkowite wyczyszczenie klatki przywraca poprawne zachowanie scrollowania i przezroczystości
-                ctx.clearRect(0, 0, width, height);
+                // Efekt smużenia
+                ctx.fillStyle = 'rgba(5, 1, 15, 0.15)';
+                ctx.fillRect(0, 0, width, height);
 
                 const cx = width / 2;
                 const cy = height / 2;
@@ -1148,7 +1130,7 @@
                 for (let star of stars) {
                     star.z -= currentSpeed;
                     
-                    // Reset, jeśli gwiazda wyleci za ekran
+                    // Reset, jeśli gwiazda wyleci za ekran (z <= 0)
                     if (star.z <= 0) {
                         star.x = Math.random() * 6000 - 3000;
                         star.y = Math.random() * 6000 - 3000;
@@ -1159,12 +1141,14 @@
                     const px = cx + (star.x / star.z) * 800;
                     const py = cy + (star.y / star.z) * 800;
                     
+                    // Pozycja z poprzedniej klatki
                     const pz = star.z + currentSpeed;
                     const ppx = cx + (star.x / pz) * 800;
                     const ppy = cy + (star.y / pz) * 800;
 
                     const size = Math.max(0.5, (1 - star.z / 2000) * 5);
 
+                    // Rysujemy na ekranie
                     if (px > 0 && px < width && py > 0 && py < height) {
                         ctx.beginPath();
                         ctx.strokeStyle = star.color;
@@ -1187,7 +1171,10 @@
 
         // Inicjalizacja
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicjalizacja tła z hiperprzestrzenią
             initStarfield();
+
+            // Ustaw domyślny język po załadowaniu
             setLang('pl');
 
             if (messageEl) {
