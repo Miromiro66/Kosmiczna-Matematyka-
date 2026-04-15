@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosmiczna Matematyka dla Dzieci</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        html {
+            background-color: #05010f;
+        }
+
+        body {
+            margin: 0;
+            padding: 1.5rem;
+            font-family: 'Nunito', sans-serif;
+            background: radial-gradient(circle at center, #2e0854 0%, #05010f 100%);
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Kosmiczne Gwiazdy (Tło) --- */
+        .stars-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 200px 50px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 250px 150px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            animation: twinkle 5s infinite alternate;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle { 
+            0% { opacity: 0.3; transform: scale(1); } 
+            100% { opacity: 0.8; transform: scale(1.02); } 
+        }
+
+        /* Ciemny, neonowy Glassmorphism */
+        .glass-panel {
+            background: rgba(10, 5, 35, 0.25);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            border-radius: 3rem;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2), inset 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        /* Zaokrąglone przyciski z trójwymiarowym efektem */
+        .btn {
+            @apply w-full text-white font-black py-4 px-4 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)] transform transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center justify-center gap-3 text-lg border-b-[4px] active:border-b-0 active:translate-y-[4px];
+        }
+        .btn-blue { background: linear-gradient(to bottom, #3b82f6, #2563eb); border-color: #1e40af; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .btn-green { background: linear-gradient(to bottom, #10b981, #059669); border-color: #047857; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        .btn-orange { background: linear-gradient(to bottom, #f59e0b, #d97706); border-color: #b45309; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+        .btn-red { background: linear-gradient(to bottom, #ef4444, #dc2626); border-color: #b91c1c; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        .btn-purple { background: linear-gradient(to bottom, #a855f7, #9333ea); border-color: #7e22ce; box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
+        .btn-dark-blue { background: linear-gradient(to bottom, #334155, #1e293b); border-color: #0f172a; box-shadow: 0 0 15px rgba(148, 163, 184, 0.2); }
+        .btn-gray { background: linear-gradient(to bottom, #64748b, #475569); border-color: #334155; box-shadow: 0 0 15px rgba(100, 116, 139, 0.4); }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            border-bottom-width: 0 !important;
+            box-shadow: none !important;
+            margin-top: 4px;
+        }
+
+        /* --- Animacje --- */
+        @keyframes tada {
+            0% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(168, 85, 247, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        }
+
+        .animate-tada { animation: tada 0.8s ease; }
+        .animate-pulse { animation: pulse-glow 0.5s ease-in-out; }
+
+        /* --- Confetti --- */
+        #confetti-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; border-radius: 3rem; z-index: 50;
+        }
+
+        .confetti {
+            position: absolute; top: -20px; width: 12px; height: 12px;
+            opacity: 0.9; animation: fall 3s linear forwards;
+            border-radius: 50%;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(600px) rotate(720deg); opacity: 0; }
+        }
+
+        /* --- Kosmiczna Energia (Klocki) --- */
+        .block-btn {
+            @apply flex-1 text-white font-black py-3 px-4 rounded-full shadow-lg transition-transform hover:-translate-y-1 active:translate-y-[4px] text-lg flex items-center justify-center gap-2 border-b-[4px] active:border-b-0;
+        }
+
+        .block-ten {
+            width: 18px;
+            height: 120px;
+            background: linear-gradient(to bottom, #06b6d4, #0891b2);
+            border: 2px solid #67e8f9;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .block-one {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(to bottom, #a3e635, #65a30d);
+            border: 2px solid #d9f99d;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.8);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: translateY(-30px) scale(0.3); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        input[type="number"] { -moz-appearance: textfield; }
+        
+        /* Styl dla scrollbara */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
+
+        /* Styl dla drukowania (Dyplom) */
+        @media print {
+            body * { visibility: hidden; }
+            #diploma-print-area, #diploma-print-area * { visibility: visible; color: black !important; }
+            #diploma-print-area { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white !important; }
+            .no-print { display: none !important; }
+            #starfield { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamiczne Tło Hiperprzestrzeni (Canvas) -->
+    <!-- Zmiana w-screen h-screen na w-full h-full oraz usunięcie ukrytych konfliktów CSS -->
+    <canvas id="starfield" class="fixed inset-0 w-full h-full -z-10 no-print" style="pointer-events: none;"></canvas>
+
+    <!-- Wybór Języka (Zawsze widoczny) -->
+    <div class="fixed top-4 right-4 z-50 flex gap-2 items-center bg-indigo-950/30 p-2 rounded-full border border-fuchsia-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)] backdrop-blur-sm no-print">
+        <button id="lang-btn-pl" onclick="setLang('pl')" class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-cyan-400 transition-all focus:outline-none" title="Polski">
+            <img src="https://flagcdn.com/pl.svg" alt="PL" class="w-full h-full object-cover scale-125">
+        </button>
+        <button id="lang-btn-is" onclick="setLang('is')" class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-cyan-400 transition-all focus:outline-none" title="Íslenska">
+            <img src="https://flagcdn.com/is.svg" alt="IS" class="w-full h-full object-cover scale-125">
+        </button>
+        <button id="lang-btn-en" onclick="setLang('en')" class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-cyan-400 transition-all focus:outline-none" title="English">
+            <img src="https://flagcdn.com/gb.svg" alt="EN" class="w-full h-full object-cover scale-125">
+        </button>
+    </div>
+
+    <!-- Główny kontener aplikacji -->
+    <div id="app-container" class="w-full max-w-[1200px] text-center flex flex-col items-center justify-center gap-6 mb-6 relative z-10 no-print">
+
+        <!-- ================= Menu Screen ================= -->
+        <div id="menu-screen" class="w-full max-w-4xl glass-panel p-6 sm:p-10 mt-10">
+            <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]">
+                <i class="fa-solid fa-rocket text-fuchsia-400 mr-2 mb-4 block sm:inline animate-pulse"></i>
+                <span data-i18n="title">Kosmiczna Matematyka!</span>
+            </h1>
+            
+            <!-- Ranga i Postęp w Menu -->
+            <div class="mb-8 flex justify-center items-center gap-3">
+                <div class="bg-indigo-900/30 px-6 py-2 rounded-full border border-indigo-500/50 flex items-center gap-2">
+                    <i class="fa-solid fa-user-astronaut text-cyan-400 text-xl"></i>
+                    <span class="text-slate-300" data-i18n="rank">Ranga:</span>
+                    <span id="menu-rank" class="text-white font-bold text-lg drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">Kadet</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-center justify-center">
+                <button onclick="selectOperation('dodawanie')" class="btn btn-blue">
+                    <i class="fa-solid fa-plus text-xl w-6"></i> <span data-i18n="add">Dodawanie</span>
+                </button>
+                <button onclick="selectOperation('odejmowanie')" class="btn btn-green">
+                    <i class="fa-solid fa-minus text-xl w-6"></i> <span data-i18n="sub">Odejmowanie</span>
+                </button>
+                <button onclick="selectOperation('mnozenie')" class="btn btn-orange">
+                    <i class="fa-solid fa-xmark text-xl w-6"></i> <span data-i18n="mul">Mnożenie</span>
+                </button>
+                <button onclick="selectOperation('dzielenie')" class="btn btn-red">
+                    <i class="fa-solid fa-divide text-xl w-6"></i> <span data-i18n="div">Dzielenie</span>
+                </button>
+                <button onclick="selectOperation('porownywanie')" class="btn btn-purple">
+                    <i class="fa-solid fa-scale-unbalanced text-xl w-6"></i> <span data-i18n="comp">Większe / Mniejsze</span>
+                </button>
+            </div>
+            
+            <!-- Przyciski pomocnicze -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+                <button onclick="showSummaryScreen()" class="btn btn-dark-blue sm:w-64">
+                    <i class="fa-solid fa-book-journal-whills text-xl w-6"></i> <span data-i18n="logbook">Dziennik</span>
+                </button>
+                <button onclick="showRulesScreen()" class="btn btn-gray sm:w-64">
+                    <i class="fa-solid fa-scroll text-xl w-6"></i> <span data-i18n="rules">Zasady Gry</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= Difficulty Screen ================= -->
+        <div id="difficulty-screen" class="hidden w-full max-w-2xl glass-panel p-6 sm:p-10 mt-10">
+            <h2 class="text-3xl sm:text-4xl font-black text-white mb-6 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] flex items-center justify-center gap-3">
+                <i class="fa-solid fa-layer-group text-cyan-400"></i> <span data-i18n="chooseLevel">Wybierz Poziom</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <button onclick="startGame('latwy')" class="btn btn-green flex-col !items-center !justify-center !gap-1 !py-3">
+                    <div class="text-2xl" data-i18n="easy">Łatwy</div>
+                    <div class="text-sm bg-black/20 px-3 py-1 rounded-full">+5 <span data-i18n="points">punktów</span></div>
+                </button>
+                <button onclick="startGame('sredni')" class="btn btn-blue flex-col !items-center !justify-center !gap-1 !py-3">
+                    <div class="text-2xl" data-i18n="medium">Średni</div>
+                    <div class="text-sm bg-black/20 px-3 py-1 rounded-full">+10 <span data-i18n="points">punktów</span></div>
+                </button>
+                <button onclick="startGame('trudny')" class="btn btn-orange flex-col !items-center !justify-center !gap-1 !py-3">
+                    <div class="text-2xl" data-i18n="hard">Trudny</div>
+                    <div class="text-sm bg-black/20 px-3 py-1 rounded-full">+15 <span data-i18n="points">punktów</span></div>
+                </button>
+            </div>
+
+            <!-- Przełącznik Misji na czas -->
+            <div class="bg-indigo-900/30 p-4 rounded-3xl border border-fuchsia-500/30 flex items-center justify-center gap-4 max-w-sm mx-auto shadow-inner">
+                <i class="fa-solid fa-stopwatch text-2xl text-fuchsia-400"></i>
+                <span class="text-white font-bold text-lg" data-i18n="timeMode">Misja na czas (60s)</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="time-mode-toggle" class="sr-only peer">
+                    <div class="w-14 h-7 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-fuchsia-500 shadow-inner"></div>
+                </label>
+            </div>
+
+            <button onclick="showMenu()" class="mt-8 text-slate-300 hover:text-white hover:scale-105 transition-all drop-shadow-md text-xl font-bold flex items-center justify-center gap-2 mx-auto">
+                <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Wróć</span>
+            </button>
+        </div>
+
+        <!-- ================= Rules Screen ================= -->
+        <div id="rules-screen" class="hidden w-full max-w-3xl glass-panel p-6 sm:p-10 text-left mx-auto mt-10">
+            <h2 class="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] text-center flex items-center justify-center gap-3">
+                <i class="fa-solid fa-scroll text-cyan-400"></i> <span data-i18n="rulesTitle">Zasady Misji</span>
+            </h2>
+            <div class="space-y-5 text-white text-lg bg-indigo-950/30 p-6 sm:p-8 rounded-[2rem] border border-fuchsia-500/30 shadow-inner">
+                <p class="flex items-start gap-4"><i class="fa-solid fa-bullseye text-green-400 mt-1 text-2xl w-8 text-center drop-shadow-md"></i> <span data-i18n="rule1"><strong>Punkty:</strong> Łatwy (+5 pkt), Średni (+10 pkt), Trudny (+15 pkt).</span></p>
+                <p class="flex items-start gap-4"><i class="fa-solid fa-fire text-orange-500 mt-1 text-2xl w-8 text-center drop-shadow-md"></i> <span data-i18n="rule2"><strong>Kombo x2:</strong> Odpowiedz poprawnie 3 razy z rzędu, by włączyć "Prędkość Światła" i zdobywać podwójne punkty! Błąd przerywa serię.</span></p>
+                <p class="flex items-start gap-4"><i class="fa-solid fa-user-astronaut text-cyan-400 mt-1 text-2xl w-8 text-center drop-shadow-md"></i> <span data-i18n="rule3"><strong>Rangi:</strong> Rozwiązuj zadania, by awansować: Kadet ➔ Pilot ➔ Kapitan Galaktyki ➔ Mistrz Wszechświata.</span></p>
+                <p class="flex items-start gap-4"><i class="fa-solid fa-stopwatch text-fuchsia-400 mt-1 text-2xl w-8 text-center drop-shadow-md"></i> <span data-i18n="rule4"><strong>Misja na czas:</strong> Włącz zegar na ekranie poziomu i spróbuj zdobyć jak najwięcej punktów w 60 sekund.</span></p>
+                <p class="flex items-start gap-4"><i class="fa-solid fa-lightbulb text-yellow-300 mt-1 text-2xl w-8 text-center drop-shadow-md"></i> <span data-i18n="rule5"><strong>Podpowiedzi:</strong> Jeśli dwa razy wpiszesz zły wynik, system prześle Ci małą wskazówkę. Używaj też Klocków Energii!</span></p>
+            </div>
+            <button onclick="showMenu()" class="mt-8 btn btn-purple mx-auto w-full sm:w-2/3 py-4 text-xl">
+                <i class="fa-solid fa-check"></i> <span data-i18n="understood">Zrozumiałem!</span>
+            </button>
+        </div>
+
+        <!-- ================= Game Screen and Blocks Wrapper ================= -->
+        <div id="game-and-blocks-wrapper" class="hidden w-full flex flex-col md:flex-row items-center md:items-stretch justify-center gap-6 mt-10">
+            
+            <!-- Ekran Gry (Lewa Strona) -->
+            <div id="game-screen" class="w-full md:w-1/2 flex flex-col">
+                <div id="game-container" class="glass-panel p-6 sm:p-8 relative h-full flex flex-col flex-grow">
+                    <div id="confetti-container"></div>
+                    
+                    <div class="flex justify-between items-center mb-2">
+                        <button onclick="showMenu()" class="text-slate-300 hover:text-white hover:scale-110 transition-all drop-shadow-md" title="Przerwij misję">
+                            <i class="fa-solid fa-power-off text-2xl drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"></i>
+                        </button>
+                        
+                        <div id="timer-wrapper" class="hidden text-xl font-black text-white bg-red-600/80 px-4 py-1 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.6)] border-2 border-red-400 flex items-center gap-2">
+                            <i class="fa-solid fa-clock animate-pulse"></i> <span id="timer-text">60</span>s
+                        </div>
+
+                        <div id="streak-wrapper" class="hidden text-sm font-bold text-fuchsia-200 bg-fuchsia-900/60 px-3 py-1 rounded-full border border-fuchsia-500/50 flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-fire text-orange-500"></i> <span data-i18n="streak">Seria:</span> <span id="streak-count">0</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center mb-4 gap-2">
+                        <div id="solved-wrapper" class="text-sm sm:text-base font-black text-white bg-teal-600/80 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(13,148,136,0.5)] border-2 border-teal-400 flex items-center gap-1.5" title="Rozwiązane zadania">
+                            <i class="fa-solid fa-check-double text-green-300"></i> <span class="hidden sm:inline" data-i18n="solved">Zadania:</span> <span id="solved-count">0</span>
+                        </div>
+                        <div id="score-wrapper" class="text-sm sm:text-base font-black text-white bg-indigo-600/80 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)] border-2 border-indigo-400 flex items-center gap-1.5" title="Zdobyte punkty">
+                            <i class="fa-solid fa-star text-yellow-300"></i> <span class="hidden sm:inline" data-i18n="score">Wynik:</span> <span id="score">0</span>
+                        </div>
+                    </div>
+
+                    <h2 id="operation-title" class="text-xl sm:text-2xl font-black text-white items-center gap-2 drop-shadow-[0_0_5px_rgba(255,255,255,0.5)] hidden md:flex justify-center mb-2">
+                        <!-- Title and icon injected via JS -->
+                    </h2>
+
+                    <div id="problem" class="flex justify-center items-center gap-3 text-5xl sm:text-6xl font-black text-white bg-transparent border-4 border-purple-500/50 p-6 rounded-[2.5rem] my-2 shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-md">
+                        <span id="num1" class="drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                        <span id="operator" class="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"></span>
+                        <span id="num2" class="drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                        <span id="equals-sign" class="text-slate-400 drop-shadow-md"></span>
+                    </div>
+                    
+                    <div id="numeric-input-section" class="mb-4 flex-grow">
+                        <input type="number" id="answer-input" class="w-full text-center text-4xl font-black p-3 border-4 border-indigo-500 bg-white/5 rounded-full focus:border-cyan-400 focus:bg-white/10 focus:shadow-[0_0_25px_rgba(34,211,238,0.6)] focus:outline-none transition-all shadow-inner text-cyan-300 placeholder-indigo-400/50 backdrop-blur-sm" placeholder="?">
+                    </div>
+                    
+                    <div id="comparison-buttons" class="hidden mb-4 grid grid-cols-3 gap-3 flex-grow">
+                        <button onclick="checkAnswer('<')" class="btn btn-blue text-3xl py-3 rounded-full w-full"><i class="fa-solid fa-less-than"></i></button>
+                        <button onclick="checkAnswer('=')" class="btn btn-green text-3xl py-3 rounded-full w-full"><i class="fa-solid fa-equals"></i></button>
+                        <button onclick="checkAnswer('>')" class="btn btn-orange text-3xl py-3 rounded-full w-full"><i class="fa-solid fa-greater-than"></i></button>
+                    </div>
+
+                    <div id="message" class="h-auto min-h-[3rem] text-lg sm:text-xl font-black drop-shadow-md text-center mb-4 flex flex-col justify-center"></div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
+                        <button id="check-btn" onclick="checkAnswer()" class="btn btn-purple py-3 text-lg w-full">
+                            <i class="fa-solid fa-satellite-dish"></i> <span data-i18n="check">Sprawdź</span>
+                        </button>
+                        <button id="next-btn" onclick="nextProblem()" class="btn btn-gray py-3 text-lg w-full" disabled>
+                            <span data-i18n="skip">Pomiń</span> <i class="fa-solid fa-forward"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kontener Energii (Prawa Strona) -->
+            <div id="blocks-wrapper" class="w-full md:w-1/2 flex flex-col hidden">
+                <div class="glass-panel p-5 sm:p-8 w-full flex flex-col items-center h-full">
+                    <h3 class="font-black text-white mb-4 text-xl flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]">
+                        <i class="fa-solid fa-battery-full text-cyan-400 text-2xl"></i> <span data-i18n="energy">Kosmiczna Energia</span>
+                    </h3>
+                    
+                    <!-- Sterowanie -->
+                    <div class="flex flex-col sm:flex-row gap-3 w-full mb-4">
+                        <div class="flex-1 flex gap-2">
+                            <button onclick="addTen()" class="block-btn bg-blue-500 hover:bg-blue-600 border-blue-700">
+                                <i class="fa-solid fa-plus"></i> 10
+                            </button>
+                            <button onclick="removeTen()" class="block-btn bg-red-500 hover:bg-red-600 border-red-700">
+                                <i class="fa-solid fa-minus"></i> 10
+                            </button>
+                        </div>
+                        <div class="flex-1 flex gap-2">
+                            <button onclick="addOne()" class="block-btn bg-green-500 hover:bg-green-600 border-green-700">
+                                <i class="fa-solid fa-plus"></i> 1
+                            </button>
+                            <button onclick="removeOne()" class="block-btn bg-orange-500 hover:bg-orange-600 border-orange-700">
+                                <i class="fa-solid fa-minus"></i> 1
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Obszar Wyświetlania -->
+                    <div class="w-full flex-grow min-h-[160px] bg-transparent border-4 border-dashed border-cyan-500/50 rounded-[2rem] p-3 flex gap-3 overflow-hidden relative shadow-[inset_0_0_20px_rgba(34,211,238,0.1)] backdrop-blur-sm">
+                        <div id="tens-container" class="flex flex-wrap-reverse items-end content-end gap-1 min-w-[20px] border-r-2 border-purple-500/50 pr-3"></div>
+                        <div id="ones-container" class="flex flex-wrap-reverse items-end content-end gap-1 min-w-[20px] max-w-[150px]"></div>
+                    </div>
+
+                    <div class="mt-4 text-lg font-bold text-indigo-100 bg-indigo-900/10 px-5 py-2 rounded-full shadow-inner border-2 border-indigo-500/30 backdrop-blur-md">
+                        <span data-i18n="energyLevel">Energia:</span> <span id="blocks-total" class="text-3xl text-cyan-400 ml-2 font-black drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">0</span>
+                    </div>
+
+                    <button id="reset-blocks-btn" class="btn btn-gray mt-4 py-2 text-lg w-full" onclick="resetBlocks()">
+                        <i class="fa-solid fa-rotate-right"></i> <span data-i18n="reset">Zresetuj</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Ekran Błędów (Dziennik Pokładowy) ================= -->
+        <div id="error-summary-screen" class="hidden w-full max-w-2xl glass-panel p-8 sm:p-10 mx-auto mt-10">
+            <h2 class="text-3xl sm:text-4xl font-black text-fuchsia-400 mb-6 drop-shadow-[0_0_10px_rgba(232,121,249,0.8)] flex items-center justify-center gap-3">
+                <i class="fa-solid fa-book-journal-whills text-4xl"></i> <span data-i18n="logTitle">Dziennik Pokładowy</span>
+            </h2>
+            
+            <button onclick="printDiploma()" class="btn btn-orange w-full sm:w-2/3 mx-auto mb-6 py-3 border-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
+                <i class="fa-solid fa-award"></i> <span data-i18n="print">Wydrukuj Kosmiczny Dyplom!</span>
+            </button>
+
+            <div id="error-list" class="space-y-4 text-lg text-white text-left max-h-72 overflow-y-auto p-4 rounded-[2rem] bg-indigo-950/30 border-2 border-fuchsia-500/40 shadow-inner backdrop-blur-sm">
+                <p class="text-indigo-300 font-bold text-center py-6" id="no-errors-message" data-i18n="noErrors">
+                    <i class="fa-solid fa-meteor text-3xl mb-3 text-cyan-400 block animate-pulse"></i>
+                    Brak wpisów o awariach.<br>Twoje obliczenia są bezbłędne!
+                </p>
+            </div>
+            <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="clearErrors()" class="btn w-full sm:w-auto bg-red-500 hover:bg-red-600 border-red-700 py-3 text-base">
+                    <i class="fa-solid fa-trash-can"></i> <span data-i18n="clearLogs">Wyczyść logi</span>
+                </button>
+                <button onclick="showMenu()" class="btn w-full sm:w-auto bg-slate-600 hover:bg-slate-700 border-slate-800 py-3 text-base">
+                    <i class="fa-solid fa-house"></i> <span data-i18n="returnBase">Wróć do bazy</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Score Summary Table (Na dole) ================= -->
+    <div id="score-summary" class="hidden w-full max-w-4xl glass-panel p-6 mb-8 relative z-10 no-print">
+        <h3 class="text-xl font-black text-white mb-4 text-center uppercase tracking-wider flex items-center justify-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+            <i class="fa-solid fa-medal text-yellow-400"></i> <span data-i18n="achievements">Osiągnięcia Misji</span>
+        </h3>
+        <div class="overflow-hidden rounded-2xl border-2 border-purple-500/40 bg-indigo-950/30 shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+            <table class="w-full text-left text-indigo-100 font-bold border-collapse">
+                <thead class="bg-indigo-900/50">
+                    <tr>
+                        <th class="py-3 px-6 text-base border-b border-purple-500/40" data-i18n="sector">Sektor Obliczeń</th>
+                        <th class="py-3 px-6 text-right text-base border-b border-purple-500/40" data-i18n="stars">Zdobyte Gwiazdki</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body" class="divide-y divide-purple-500/20">
+                    <!-- Wyniki będą tutaj generowane -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Ukryty szablon dyplomu do druku -->
+    <div id="diploma-print-area" class="hidden text-center p-10 bg-white w-full">
+        <div style="border: 15px solid #a855f7; border-radius: 20px; padding: 40px; margin: 20px;">
+            <h1 style="font-size: 3rem; color: #7e22ce; margin-bottom: 10px;" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
+            <h2 style="font-size: 1.5rem; color: #3b82f6; margin-top: 0;" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
+            
+            <p style="font-size: 1.2rem; margin-top: 40px;" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
+            <h2 id="print-rank" style="font-size: 2.5rem; color: #eab308; margin: 20px 0;">Kadet</h2>
+            
+            <p style="font-size: 1.2rem; margin-top: 30px;" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
+            <h3 id="print-solved" style="font-size: 2rem; color: #10b981; margin: 10px 0;">0</h3>
+            
+            <div style="margin-top: 50px; border-top: 2px solid #ccc; width: 50%; margin-left: auto; margin-right: auto; padding-top: 10px;">
+                <p style="font-size: 1rem; color: #666;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date"></span></p>
+                <p style="font-size: 0.9rem; color: #999;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SŁOWNIK TŁUMACZEŃ ---
+        const i18n = {
+            pl: {
+                title: "Kosmiczna Matematyka!", add: "Dodawanie", sub: "Odejmowanie", mul: "Mnożenie", div: "Dzielenie", comp: "Większe / Mniejsze",
+                logbook: "Dziennik", rules: "Zasady Gry", rank: "Ranga:", rank0: "Kadet", rank1: "Pilot", rank2: "Kapitan Galaktyki", rank3: "Mistrz Wszechświata",
+                chooseLevel: "Wybierz Poziom", easy: "Łatwy", medium: "Średni", hard: "Trudny", points: "punktów", timeMode: "Misja na czas (60s)", back: "Wróć",
+                rulesTitle: "Zasady Misji",
+                rule1: "<strong>Punkty:</strong> Łatwy (+5 pkt), Średni (+10 pkt), Trudny (+15 pkt).",
+                rule2: "<strong>Kombo x2:</strong> Odpowiedz poprawnie 3 razy z rzędu, by włączyć \"Prędkość Światła\" i zdobywać podwójne punkty! Błąd przerywa serię.",
+                rule3: "<strong>Rangi:</strong> Rozwiązuj zadania, by awansować: Kadet ➔ Pilot ➔ Kapitan Galaktyki ➔ Mistrz Wszechświata.",
+                rule4: "<strong>Misja na czas:</strong> Włącz zegar na ekranie poziomu i spróbuj zdobyć jak najwięcej punktów w 60 sekund.",
+                rule5: "<strong>Podpowiedzi:</strong> Jeśli dwa razy wpiszesz zły wynik, system prześle Ci małą wskazówkę. Używaj też Klocków Energii!",
+                understood: "Zrozumiałem!", energy: "Kosmiczna Energia", energyLevel: "Energia:", reset: "Zresetuj", solved: "Zadania:", score: "Wynik:",
+                skip: "Pomiń", check: "Sprawdź", logTitle: "Dziennik Pokładowy", print: "Wydrukuj Kosmiczny Dyplom!",
+                noErrors: '<i class="fa-solid fa-meteor text-3xl mb-3 text-cyan-400 block animate-pulse"></i> Brak wpisów o awariach.<br>Twoje obliczenia są bezbłędne!',
+                clearLogs: "Wyczyść logi", returnBase: "Wróć do bazy", achievements: "Osiągnięcia Misji", sector: "Sektor Obliczeń", stars: "Zdobyte Gwiazdki",
+                noData: "Brak danych misji!", success: "Sukces!", error: "Błąd, spróbuj ponownie!",
+                hintComp: "Podpowiedź: Policz zera albo użyj palców do porównania!", hintMul: "Podpowiedź: Pamiętaj, mnożenie to po prostu wielokrotne dodawanie.", hintDef: "Podpowiedź: Użyj kosmicznej energii (klocków) po prawej!",
+                timeOut: "Koniec Czasu! Misja zakończona.", typeValue: "Wpisz wartość!", combo: "(x2 KOMBO!)", streak: "Seria:", was: "Było:", given: "Podano:",
+                diplomaTitle1: "CERTYFIKAT", diplomaTitle2: "Kosmicznej Matematyki", diplomaText1: "Ten dyplom potwierdza, że posiadacz uzyskał rangę:", diplomaText2: "Rozwiązano poprawnie zadań:", diplomaText3: "Data misji:", diplomaText4: "Gratulacje od Dowództwa Galaktyki!"
+            },
+            en: {
+                title: "Space Math!", add: "Addition", sub: "Subtraction", mul: "Multiplication", div: "Division", comp: "Greater / Less",
+                logbook: "Logbook", rules: "Game Rules", rank: "Rank:", rank0: "Cadet", rank1: "Pilot", rank2: "Galaxy Captain", rank3: "Master of the Universe",
+                chooseLevel: "Select Level", easy: "Easy", medium: "Medium", hard: "Hard", points: "points", timeMode: "Time Mission (60s)", back: "Back",
+                rulesTitle: "Mission Rules",
+                rule1: "<strong>Points:</strong> Easy (+5 pts), Medium (+10 pts), Hard (+15 pts).",
+                rule2: "<strong>Combo x2:</strong> Answer correctly 3 times in a row to engage \"Light Speed\" and earn double points! A mistake breaks the streak.",
+                rule3: "<strong>Ranks:</strong> Solve problems to rank up: Cadet ➔ Pilot ➔ Galaxy Captain ➔ Master of the Universe.",
+                rule4: "<strong>Time Mission:</strong> Turn on the clock on the level screen and try to get as many points as possible in 60 seconds.",
+                rule5: "<strong>Hints:</strong> If you enter the wrong answer twice, the system will send you a small hint. Use Energy Blocks too!",
+                understood: "Got it!", energy: "Space Energy", energyLevel: "Energy:", reset: "Reset", solved: "Solved:", score: "Score:",
+                skip: "Skip", check: "Check", logTitle: "Flight Log", print: "Print Space Diploma!",
+                noErrors: '<i class="fa-solid fa-meteor text-3xl mb-3 text-cyan-400 block animate-pulse"></i> No crash reports.<br>Your calculations are flawless!',
+                clearLogs: "Clear logs", returnBase: "Return to base", achievements: "Mission Achievements", sector: "Calculation Sector", stars: "Stars Earned",
+                noData: "No mission data!", success: "Success!", error: "Error, try again!",
+                hintComp: "Hint: Count the zeros or use your fingers to compare!", hintMul: "Hint: Remember, multiplication is just repeated addition.", hintDef: "Hint: Use space energy (blocks) on the right!",
+                timeOut: "Time's up! Mission completed.", typeValue: "Enter a value!", combo: "(x2 COMBO!)", streak: "Streak:", was: "Was:", given: "Given:",
+                diplomaTitle1: "CERTIFICATE", diplomaTitle2: "of Space Math", diplomaText1: "This diploma confirms that the holder has achieved the rank of:", diplomaText2: "Correctly solved problems:", diplomaText3: "Mission date:", diplomaText4: "Congratulations from Galactic Command!"
+            },
+            is: {
+                title: "Geimstærðfræði!", add: "Samlagning", sub: "Frádráttur", mul: "Margföldun", div: "Deiling", comp: "Stærra / Minna",
+                logbook: "Dagbók", rules: "Leikreglur", rank: "Staða:", rank0: "Nýliði", rank1: "Flugmaður", rank2: "Vetrarbrautarstjóri", rank3: "Meistari Alheimsins",
+                chooseLevel: "Veldu Stig", easy: "Auðvelt", medium: "Miðlungs", hard: "Erfitt", points: "stig", timeMode: "Tímaverkefni (60s)", back: "Til baka",
+                rulesTitle: "Reglur Verkefnis",
+                rule1: "<strong>Stig:</strong> Auðvelt (+5 stig), Miðlungs (+10 stig), Erfitt (+15 stig).",
+                rule2: "<strong>Tvöfalt (x2):</strong> Svaraðu rétt 3 sinnum í röð til að virkja „Ljóshraða“ og fá tvöföld stig! Mistök brjóta röðina.",
+                rule3: "<strong>Stöður:</strong> Leystu dæmi til að hækka í tign: Nýliði ➔ Flugmaður ➔ Vetrarbrautarstjóri ➔ Meistari Alheimsins.",
+                rule4: "<strong>Tímaverkefni:</strong> Kveiktu á klukkunni á stigaskjánum og reyndu að fá sem flest stig á 60 sekúndum.",
+                rule5: "<strong>Vísbendingar:</strong> Ef þú slærð inn rangt svar tvisvar, sendir kerfið þér litla vísbendingu. Notaðu líka Orkublokkir!",
+                understood: "Skilið!", energy: "Geimorka", energyLevel: "Orka:", reset: "Endurstilla", solved: "Leyst:", score: "Stig:",
+                skip: "Sleppa", check: "Athuga", logTitle: "Flugdagbók", print: "Prenta Geimprófskírteini!",
+                noErrors: '<i class="fa-solid fa-meteor text-3xl mb-3 text-cyan-400 block animate-pulse"></i> Engar tilkynningar um hrun.<br>Útreikningar þínir eru hnökralausir!',
+                clearLogs: "Hreinsa kladda", returnBase: "Fara í stöð", achievements: "Árangur Verkefnis", sector: "Útreikningssvæði", stars: "Stjörnur Áunnar",
+                noData: "Engin gögn um verkefni!", success: "Árangur!", error: "Villa, reyndu aftur!",
+                hintComp: "Vísbending: Teldu núllin eða notaðu fingurna til að bera saman!", hintMul: "Vísbending: Mundu að margföldun er bara endurtekin samlagning.", hintDef: "Vísbending: Notaðu geimorkuna (blokkirnar) til hægri!",
+                timeOut: "Tíminn er runninn út! Verkefni lokið.", typeValue: "Sláðu inn gildi!", combo: "(x2 TVÖFALT!)", streak: "Röð:", was: "Var:", given: "Gefið:",
+                diplomaTitle1: "VIÐURKENNING", diplomaTitle2: "í Geimstærðfræði", diplomaText1: "Þetta prófskírteini staðfestir að handhafi hefur náð stöðunni:", diplomaText2: "Rétt leyst dæmi:", diplomaText3: "Dagsetning verkefnis:", diplomaText4: "Til hamingju frá Geimstjórninni!"
+            }
+        };
+
+        let currentLang = 'pl';
+
+        function setLang(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                const key = el.getAttribute('data-i18n-title');
+                if (i18n[lang][key]) {
+                    el.setAttribute('title', i18n[lang][key]);
+                }
+            });
+
+            ['pl', 'is', 'en'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (btn) {
+                    if (l === lang) {
+                        btn.classList.add('border-cyan-400', 'scale-110', 'shadow-[0_0_10px_rgba(34,211,238,0.8)]');
+                        btn.classList.remove('border-transparent');
+                    } else {
+                        btn.classList.remove('border-cyan-400', 'scale-110', 'shadow-[0_0_10px_rgba(34,211,238,0.8)]');
+                        btn.classList.add('border-transparent');
+                    }
+                }
+            });
+
+            updateRankDisplay();
+            updateScoreTable();
+            populateErrorList();
+            
+            const gameAndBlocksWrapper = document.getElementById('game-and-blocks-wrapper');
+            if (gameAndBlocksWrapper && !gameAndBlocksWrapper.classList.contains('hidden') && currentOperation !== '') {
+                const operationTitle = document.getElementById('operation-title');
+                if(operationTitle) {
+                    operationTitle.innerHTML = `${operationIcons[currentOperation]} <span class="hidden md:inline">${getOperationNames()[currentOperation]}</span>`;
+                }
+            }
+        }
+
+        // DOM Elements
+        const menuScreen = document.getElementById('menu-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const scoreEl = document.getElementById('score');
+        const scoreWrapper = document.getElementById('score-wrapper');
+        const num1El = document.getElementById('num1');
+        const num2El = document.getElementById('num2');
+        const operatorEl = document.getElementById('operator');
+        const equalsSignEl = document.getElementById('equals-sign');
+        const answerInput = document.getElementById('answer-input');
+        const messageEl = document.getElementById('message');
+        const checkBtn = document.getElementById('check-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const confettiContainer = document.getElementById('confetti-container');
+        const scoreSummary = document.getElementById('score-summary');
+        const scoreTableBody = document.getElementById('score-table-body');
+        const errorSummaryScreen = document.getElementById('error-summary-screen');
+        const errorList = document.getElementById('error-list');
+        const noErrorsMessage = document.getElementById('no-errors-message');
+        const rulesScreen = document.getElementById('rules-screen');
+        const numericInputSection = document.getElementById('numeric-input-section');
+        const comparisonButtons = document.getElementById('comparison-buttons');
+        const gameAndBlocksWrapper = document.getElementById('game-and-blocks-wrapper');
+        const blocksWrapper = document.getElementById('blocks-wrapper');
+        const solvedCountEl = document.getElementById('solved-count');
+        const solvedWrapper = document.getElementById('solved-wrapper');
+        const timeModeToggle = document.getElementById('time-mode-toggle');
+        const timerWrapper = document.getElementById('timer-wrapper');
+        const timerText = document.getElementById('timer-text');
+        const streakWrapper = document.getElementById('streak-wrapper');
+        const streakCountEl = document.getElementById('streak-count');
+
+        // Blocks DOM Elements
+        const tensContainer = document.getElementById('tens-container');
+        const onesContainer = document.getElementById('ones-container');
+        const blocksTotalEl = document.getElementById('blocks-total');
+
+        // Game State Variables
+        let scores = {
+            'dodawanie': 0, 'odejmowanie': 0, 'mnozenie': 0, 'dzielenie': 0, 'porownywanie': 0
+        };
+        let currentOperation = '';
+        let currentDifficulty = 'latwy';
+        let correctAnswer = 0;
+        let incorrectAttempts = [];
+        let autoAdvanceTimeout;
+        let globalSolvedCount = 0;
+        
+        let isTimeMode = false;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let streak = 0;
+        let currentProblemFails = 0;
+
+        const diffSettings = {
+            'latwy': { points: 5, rangeAdd: 20, rangeMult: 5 },
+            'sredni': { points: 10, rangeAdd: 50, rangeMult: 10 },
+            'trudny': { points: 15, rangeAdd: 100, rangeMult: 15 }
+        };
+
+        let tensCount = 0;
+        let onesCount = 0;
+        const MAX_TENS = 15;
+        const MAX_ONES = 30;
+
+        const getOperationNames = () => ({
+            'dodawanie': i18n[currentLang].add,
+            'odejmowanie': i18n[currentLang].sub,
+            'mnozenie': i18n[currentLang].mul,
+            'dzielenie': i18n[currentLang].div,
+            'porownywanie': i18n[currentLang].comp
+        });
+
+        const operationIcons = {
+            'dodawanie': '<i class="fa-solid fa-plus text-cyan-400"></i>',
+            'odejmowanie': '<i class="fa-solid fa-minus text-green-400"></i>',
+            'mnozenie': '<i class="fa-solid fa-xmark text-orange-400"></i>',
+            'dzielenie': '<i class="fa-solid fa-divide text-red-400"></i>',
+            'porownywanie': '<i class="fa-solid fa-scale-unbalanced text-fuchsia-400"></i>'
+        };
+
+        function getRankName() {
+            if (globalSolvedCount < 10) return i18n[currentLang].rank0;
+            if (globalSolvedCount < 25) return i18n[currentLang].rank1;
+            if (globalSolvedCount < 50) return i18n[currentLang].rank2;
+            return i18n[currentLang].rank3;
+        }
+
+        function updateRankDisplay() {
+            const r = document.getElementById('menu-rank');
+            if(r) r.textContent = getRankName();
+        }
+
+        /* --- Blocks Logic --- */
+        function updateBlocksVisuals() {
+            if(!tensContainer || !onesContainer || !blocksTotalEl) return;
+            tensContainer.innerHTML = '';
+            for(let i=0; i<tensCount; i++) {
+                const ten = document.createElement('div');
+                ten.className = 'block-ten';
+                tensContainer.appendChild(ten);
+            }
+            onesContainer.innerHTML = '';
+            for(let i=0; i<onesCount; i++) {
+                const one = document.createElement('div');
+                one.className = 'block-one';
+                onesContainer.appendChild(one);
+            }
+            const total = (tensCount * 10) + onesCount;
+            blocksTotalEl.textContent = total;
+            if(answerInput && currentOperation !== 'porownywanie') {
+                answerInput.value = total > 0 ? total : '';
+            }
+        }
+
+        function addTen() { if(tensCount < MAX_TENS) { tensCount++; updateBlocksVisuals(); } }
+        function removeTen() { 
+            if(tensCount > 0) { 
+                tensCount--; 
+                updateBlocksVisuals(); 
+            } else if (onesCount >= 10) {
+                onesCount -= 10;
+                updateBlocksVisuals();
+            }
+        }
+        function addOne() { if(onesCount < MAX_ONES) { onesCount++; updateBlocksVisuals(); } }
+        function removeOne() { 
+            if(onesCount > 0) { 
+                onesCount--; 
+                updateBlocksVisuals(); 
+            } else if (tensCount > 0) {
+                tensCount--;
+                onesCount += 9;
+                updateBlocksVisuals();
+            }
+        }
+
+        function resetBlocks() {
+            tensCount = 0;
+            onesCount = 0;
+            updateBlocksVisuals();
+            if(answerInput) answerInput.value = '';
+        }
+
+        /* --- Zegar Logic --- */
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 60;
+            timerText.textContent = timeLeft;
+            timerWrapper.classList.remove('hidden');
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerText.textContent = timeLeft;
+                
+                if(timeLeft <= 10) {
+                    timerWrapper.classList.add('bg-red-800');
+                } else {
+                    timerWrapper.classList.remove('bg-red-800');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGameByTime();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerWrapper.classList.add('hidden');
+        }
+
+        function endGameByTime() {
+            if(messageEl) {
+                messageEl.innerHTML = `<i class="fa-solid fa-hourglass-end text-3xl"></i><br>${i18n[currentLang].timeOut}`;
+                messageEl.className = 'h-auto min-h-[3rem] text-2xl font-black drop-shadow-[0_0_10px_rgba(251,146,60,0.8)] text-center mb-4 text-orange-400 animate-tada';
+            }
+            if (checkBtn) checkBtn.disabled = true;
+            if (comparisonButtons) comparisonButtons.querySelectorAll('button').forEach(b => b.disabled = true);
+            if (answerInput) answerInput.disabled = true;
+            if (nextBtn) {
+                nextBtn.disabled = false;
+                nextBtn.innerHTML = `<i class="fa-solid fa-list"></i> ${i18n[currentLang].logbook}`;
+                nextBtn.onclick = showSummaryScreen;
+            }
+        }
+
+        /* --- Game Logic --- */
+        function updateScoreTable() {
+            if(!scoreTableBody) return;
+            scoreTableBody.innerHTML = '';
+            for (const opKey in scores) {
+                if (scores[opKey] > 0) {
+                    const row = document.createElement('tr');
+                    row.classList.add('hover:bg-indigo-800/50', 'transition', 'duration-200');
+                    row.innerHTML = `
+                        <td class="py-3 px-6 flex items-center gap-3">
+                            ${operationIcons[opKey]} ${getOperationNames()[opKey]}
+                        </td>
+                        <td class="py-3 px-6 text-right text-cyan-400 text-xl font-black drop-shadow-[0_0_5px_rgba(34,211,238,0.5)]">${scores[opKey]}</td>
+                    `;
+                    scoreTableBody.appendChild(row);
+                }
+            }
+            if(scoreTableBody.innerHTML === '') {
+                scoreTableBody.innerHTML = `<tr><td colspan="2" class="py-4 text-center text-indigo-400 font-medium italic">${i18n[currentLang].noData}</td></tr>`;
+            }
+        }
+        
+        function populateErrorList() {
+            if(!errorList || !noErrorsMessage) return;
+            errorList.innerHTML = '';
+            if (incorrectAttempts.length === 0) {
+                noErrorsMessage.classList.remove('hidden');
+                errorList.appendChild(noErrorsMessage);
+            } else {
+                noErrorsMessage.classList.add('hidden');
+                incorrectAttempts.forEach((attempt, index) => {
+                    const errorItem = document.createElement('div');
+                    errorItem.classList.add('p-3', 'bg-red-950/50', 'rounded-2xl', 'border-l-4', 'border-red-500', 'shadow-sm', 'mb-2');
+                    let problemText = (attempt.operation === 'porownywanie') 
+                        ? `${attempt.num1} <span class="text-green-400">${attempt.correctAnswer}</span> ${attempt.num2}`
+                        : `${attempt.num1} ${attempt.operator} ${attempt.num2} = <span class="text-green-400">${attempt.correctAnswer}</span>`;
+                    
+                    errorItem.innerHTML = `
+                        <p class="font-bold text-white text-lg">${index + 1}. <span class="text-indigo-200">${i18n[currentLang].was}</span> ${problemText}</p>
+                        <p class="text-indigo-200 text-sm mt-1">${i18n[currentLang].given} <span class="font-black text-red-400">${attempt.userAnswer}</span></p>
+                        <p class="text-xs text-indigo-400 mt-2 font-bold uppercase tracking-widest">${getOperationNames()[attempt.operation]}</p>`;
+                    errorList.appendChild(errorItem);
+                });
+            }
+        }
+
+        function clearErrors() {
+            incorrectAttempts = [];
+            populateErrorList();
+        }
+
+        function selectOperation(operation) {
+            currentOperation = operation;
+            if(menuScreen) menuScreen.classList.add('hidden');
+            if(rulesScreen) rulesScreen.classList.add('hidden');
+            const diffScreen = document.getElementById('difficulty-screen');
+            if(diffScreen) diffScreen.classList.remove('hidden');
+        }
+
+        function startGame(difficulty) {
+            currentDifficulty = difficulty;
+            scores[currentOperation] = scores[currentOperation] || 0; 
+            if(scoreEl) scoreEl.textContent = scores[currentOperation];
+            
+            isTimeMode = timeModeToggle.checked;
+            streak = 0;
+            updateStreakDisplay();
+            
+            const diffScreen = document.getElementById('difficulty-screen');
+            if(diffScreen) diffScreen.classList.add('hidden');
+            if(menuScreen) menuScreen.classList.add('hidden');
+            if(rulesScreen) rulesScreen.classList.add('hidden');
+            if(errorSummaryScreen) errorSummaryScreen.classList.add('hidden');
+            if(gameAndBlocksWrapper) gameAndBlocksWrapper.classList.remove('hidden'); 
+            if(scoreSummary) scoreSummary.classList.remove('hidden');
+            
+            const operationTitle = document.getElementById('operation-title');
+            if(operationTitle) {
+                operationTitle.innerHTML = `${operationIcons[currentOperation]} <span class="hidden md:inline">${getOperationNames()[currentOperation]}</span>`;
+            }
+
+            if (currentOperation === 'porownywanie') {
+                if(numericInputSection) numericInputSection.classList.add('hidden');
+                if(checkBtn) checkBtn.classList.add('hidden');
+                if(comparisonButtons) comparisonButtons.classList.remove('hidden');
+                if(blocksWrapper) blocksWrapper.classList.add('hidden'); 
+            } else {
+                if(numericInputSection) numericInputSection.classList.remove('hidden');
+                if(checkBtn) checkBtn.classList.remove('hidden');
+                if(comparisonButtons) comparisonButtons.classList.add('hidden');
+                if(blocksWrapper) blocksWrapper.classList.remove('hidden'); 
+                resetBlocks();
+            }
+            
+            if(answerInput) answerInput.disabled = false;
+            if (nextBtn) {
+                nextBtn.innerHTML = `<span data-i18n="skip">${i18n[currentLang].skip}</span> <i class="fa-solid fa-forward"></i>`;
+                nextBtn.onclick = nextProblem;
+            }
+
+            updateScoreTable();
+            
+            if(isTimeMode) {
+                startTimer();
+            } else {
+                stopTimer();
+            }
+            
+            nextProblem();
+        }
+
+        function showMenu() {
+            stopTimer();
+            updateRankDisplay();
+            if(gameAndBlocksWrapper) gameAndBlocksWrapper.classList.add('hidden'); 
+            if(scoreSummary) scoreSummary.classList.add('hidden'); 
+            if(errorSummaryScreen) errorSummaryScreen.classList.add('hidden'); 
+            const diffScreen = document.getElementById('difficulty-screen');
+            if(diffScreen) diffScreen.classList.add('hidden');
+            if(rulesScreen) rulesScreen.classList.add('hidden');
+            if(menuScreen) menuScreen.classList.remove('hidden'); 
+            if(blocksWrapper) blocksWrapper.classList.add('hidden'); 
+        }
+
+        function showSummaryScreen() {
+            stopTimer();
+            updateRankDisplay();
+            if(menuScreen) menuScreen.classList.add('hidden');
+            const diffScreen = document.getElementById('difficulty-screen');
+            if(diffScreen) diffScreen.classList.add('hidden');
+            if(rulesScreen) rulesScreen.classList.add('hidden');
+            if(gameAndBlocksWrapper) gameAndBlocksWrapper.classList.add('hidden'); 
+            if(scoreSummary) scoreSummary.classList.add('hidden'); 
+            if(errorSummaryScreen) errorSummaryScreen.classList.remove('hidden'); 
+            if(blocksWrapper) blocksWrapper.classList.add('hidden'); 
+            populateErrorList();
+        }
+
+        function showRulesScreen() {
+            stopTimer();
+            updateRankDisplay();
+            if(menuScreen) menuScreen.classList.add('hidden');
+            const diffScreen = document.getElementById('difficulty-screen');
+            if(diffScreen) diffScreen.classList.add('hidden');
+            if(gameAndBlocksWrapper) gameAndBlocksWrapper.classList.add('hidden'); 
+            if(scoreSummary) scoreSummary.classList.add('hidden'); 
+            if(errorSummaryScreen) errorSummaryScreen.classList.add('hidden'); 
+            if(blocksWrapper) blocksWrapper.classList.add('hidden'); 
+            if(rulesScreen) rulesScreen.classList.remove('hidden');
+        }
+
+        function generateProblem() {
+            currentProblemFails = 0;
+            let num1, num2;
+            if(equalsSignEl) equalsSignEl.textContent = '= ?';
+            
+            const settings = diffSettings[currentDifficulty];
+            const maxAdd = settings.rangeAdd;
+            const maxMult = settings.rangeMult;
+
+            if (currentOperation === 'dodawanie') {
+                num1 = Math.floor(Math.random() * maxAdd) + 1;
+                num2 = Math.floor(Math.random() * maxAdd) + 1;
+                correctAnswer = num1 + num2;
+                if(operatorEl) operatorEl.innerHTML = '<i class="fa-solid fa-plus"></i>';
+            } else if (currentOperation === 'odejmowanie') {
+                num1 = Math.floor(Math.random() * maxAdd) + 1;
+                num2 = Math.floor(Math.random() * num1) + 1; 
+                correctAnswer = num1 - num2;
+                if(operatorEl) operatorEl.innerHTML = '<i class="fa-solid fa-minus"></i>';
+            } else if (currentOperation === 'mnozenie') {
+                num1 = Math.floor(Math.random() * maxMult) + 1;
+                num2 = Math.floor(Math.random() * maxMult) + 1;
+                correctAnswer = num1 * num2;
+                if(operatorEl) operatorEl.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else if (currentOperation === 'dzielenie') {
+                const divisor = Math.floor(Math.random() * maxMult) + 2;
+                const result = Math.floor(Math.random() * maxMult) + 2;
+                num1 = divisor * result;
+                num2 = divisor;
+                correctAnswer = result;
+                if(operatorEl) operatorEl.innerHTML = '<i class="fa-solid fa-divide"></i>';
+            } else if (currentOperation === 'porownywanie') {
+                num1 = Math.floor(Math.random() * (maxAdd * 2)) + 1;
+                num2 = Math.floor(Math.random() * (maxAdd * 2)) + 1;
+                if (num1 > num2) correctAnswer = '>';
+                else if (num1 < num2) correctAnswer = '<';
+                else correctAnswer = '=';
+                if(operatorEl) operatorEl.textContent = '?';
+                if(equalsSignEl) equalsSignEl.textContent = ''; 
+            }
+
+            if(num1El) num1El.textContent = num1;
+            if(num2El) num2El.textContent = num2;
+        }
+
+        function createConfetti() {
+            if(!confettiContainer) return;
+            const colors = ['#22d3ee', '#34d399', '#f472b6', '#c084fc', '#fbbf24', '#e879f9'];
+            for (let i = 0; i < 40; i++) {
+                const c = document.createElement('div');
+                c.classList.add('confetti');
+                c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                c.style.left = Math.random() * 100 + '%';
+                c.style.animationDelay = Math.random() * 0.4 + 's';
+                c.style.boxShadow = `0 0 10px ${c.style.backgroundColor}`;
+                confettiContainer.appendChild(c);
+                setTimeout(() => c.remove(), 3500);
+            }
+        }
+
+        function updateStreakDisplay() {
+            if (streak > 0) {
+                streakWrapper.classList.remove('hidden');
+                streakCountEl.textContent = streak;
+                if (streak >= 3) {
+                    streakWrapper.classList.add('bg-fuchsia-600', 'border-fuchsia-300', 'scale-110');
+                } else {
+                    streakWrapper.classList.remove('bg-fuchsia-600', 'border-fuchsia-300', 'scale-110');
+                }
+            } else {
+                streakWrapper.classList.add('hidden');
+            }
+        }
+
+        function getHintMessage() {
+            if (currentOperation === 'porownywanie') return i18n[currentLang].hintComp;
+            if (currentOperation === 'mnozenie') return i18n[currentLang].hintMul;
+            return i18n[currentLang].hintDef;
+        }
+
+        function checkAnswer(userAnswerFromButton) {
+            const isComparison = currentOperation === 'porownywanie';
+            let userAnswer;
+
+            if (isComparison) {
+                userAnswer = userAnswerFromButton;
+            } else {
+                if (!answerInput || answerInput.value === '') {
+                    if(messageEl) {
+                        messageEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${i18n[currentLang].typeValue}`;
+                        messageEl.className = 'h-auto min-h-[3rem] text-xl font-black drop-shadow-[0_0_10px_rgba(251,146,60,0.8)] text-center mb-4 text-orange-400 animate-tada flex flex-col justify-center';
+                    }
+                    return;
+                }
+                userAnswer = parseInt(answerInput.value);
+            }
+            
+            if (userAnswer === correctAnswer) {
+                streak++;
+                let multiplier = streak >= 3 ? 2 : 1;
+                let pointsEarned = diffSettings[currentDifficulty].points * multiplier;
+                
+                scores[currentOperation] += pointsEarned;
+                globalSolvedCount++;
+                
+                updateStreakDisplay();
+                if(scoreEl) scoreEl.textContent = scores[currentOperation];
+                if(solvedCountEl) solvedCountEl.textContent = globalSolvedCount;
+                
+                if(messageEl) {
+                    let msg = `<i class="fa-solid fa-rocket"></i> ${i18n[currentLang].success} +${pointsEarned}`;
+                    if (multiplier > 1) msg += ` <span class="text-fuchsia-300 ml-2 animate-pulse">${i18n[currentLang].combo}</span>`;
+                    messageEl.innerHTML = msg;
+                    messageEl.className = 'h-auto min-h-[3rem] text-xl sm:text-2xl font-black drop-shadow-[0_0_10px_rgba(52,211,153,0.8)] text-center mb-4 text-emerald-400 animate-tada flex flex-col justify-center';
+                }
+                
+                if(scoreWrapper) scoreWrapper.classList.add('animate-pulse');
+                if(solvedWrapper) solvedWrapper.classList.add('animate-pulse');
+                
+                createConfetti();
+                updateScoreTable();
+
+                if (isComparison && comparisonButtons) {
+                    comparisonButtons.querySelectorAll('button').forEach(btn => btn.disabled = true);
+                } else if (checkBtn) {
+                    checkBtn.disabled = true;
+                }
+                if (nextBtn) nextBtn.disabled = true; 
+                
+                clearTimeout(autoAdvanceTimeout);
+                autoAdvanceTimeout = setTimeout(() => {
+                    if(!isTimeMode || timeLeft > 0) nextProblem();
+                }, 1500);
+
+            } else {
+                streak = 0;
+                updateStreakDisplay();
+                currentProblemFails++;
+
+                let errorMsg = `<i class="fa-solid fa-triangle-exclamation"></i> ${i18n[currentLang].error}`;
+                
+                if (currentProblemFails >= 2) {
+                    errorMsg += `<br><span class="text-base text-yellow-300 drop-shadow-md font-bold">${getHintMessage()}</span>`;
+                }
+
+                if(messageEl) {
+                    messageEl.innerHTML = errorMsg;
+                    messageEl.className = 'h-auto min-h-[3rem] text-lg sm:text-xl font-black drop-shadow-[0_0_10px_rgba(248,113,113,0.8)] text-center mb-4 text-red-400 animate-tada flex flex-col justify-center';
+                }
+                
+                incorrectAttempts.push({
+                    num1: parseInt(num1El.textContent),
+                    operator: operatorEl.innerText, 
+                    num2: parseInt(num2El.textContent),
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    operation: currentOperation
+                });
+
+                if (nextBtn) {
+                    nextBtn.disabled = false;
+                }
+                
+                if (!isComparison && answerInput) {
+                    answerInput.focus();
+                    answerInput.select();
+                }
+            }
+        }
+
+        function nextProblem() {
+            clearTimeout(autoAdvanceTimeout);
+            if(confettiContainer) confettiContainer.innerHTML = '';
+            generateProblem();
+            if(messageEl) messageEl.textContent = '';
+            if(nextBtn) nextBtn.disabled = true;
+            
+            if (currentOperation === 'porownywanie') {
+                if(comparisonButtons) comparisonButtons.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            } else {
+                if(checkBtn) checkBtn.disabled = false;
+                resetBlocks();
+                if(answerInput) answerInput.focus();
+            }
+        }
+
+        function printDiploma() {
+            document.getElementById('print-rank').textContent = getRankName();
+            document.getElementById('print-solved').textContent = globalSolvedCount;
+            const today = new Date();
+            document.getElementById('print-date').textContent = today.toLocaleDateString();
+            
+            window.print();
+        }
+
+        // --- HIPERPRZESTRZEŃ (CANVAS STARFIELD) ---
+        function initStarfield() {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let stars = [];
+            const numStars = 1200; // Zwiększona ilość gwiazd na szerszy obszar
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Tworzymy gwiazdy (x, y to pozycje 3D, z to głębia)
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * 6000 - 3000, 
+                    y: Math.random() * 6000 - 3000, 
+                    z: Math.random() * 2000,
+                    // Różne kolory: fuksja, turkus i biały
+                    color: Math.random() > 0.8 ? '#a855f7' : (Math.random() > 0.6 ? '#22d3ee' : '#ffffff') 
+                });
+            }
+
+            function animateStarfield() {
+                // Całkowite wyczyszczenie klatki przywraca poprawne zachowanie scrollowania i przezroczystości
+                ctx.clearRect(0, 0, width, height);
+
+                const cx = width / 2;
+                const cy = height / 2;
+
+                // PRĘDKOŚĆ ŚWIATŁA!
+                let currentSpeed = streak >= 3 ? 18 : 2.5;
+
+                for (let star of stars) {
+                    star.z -= currentSpeed;
+                    
+                    // Reset, jeśli gwiazda wyleci za ekran
+                    if (star.z <= 0) {
+                        star.x = Math.random() * 6000 - 3000;
+                        star.y = Math.random() * 6000 - 3000;
+                        star.z = 2000;
+                    }
+
+                    // Rzutowanie perspektywiczne 3D -> 2D
+                    const px = cx + (star.x / star.z) * 800;
+                    const py = cy + (star.y / star.z) * 800;
+                    
+                    const pz = star.z + currentSpeed;
+                    const ppx = cx + (star.x / pz) * 800;
+                    const ppy = cy + (star.y / pz) * 800;
+
+                    const size = Math.max(0.5, (1 - star.z / 2000) * 5);
+
+                    if (px > 0 && px < width && py > 0 && py < height) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = star.color;
+                        ctx.lineWidth = size;
+                        
+                        ctx.shadowBlur = size * 2;
+                        ctx.shadowColor = star.color;
+                        
+                        ctx.moveTo(ppx, ppy);
+                        ctx.lineTo(px, py);
+                        ctx.stroke();
+                        
+                        ctx.shadowBlur = 0;
+                    }
+                }
+                requestAnimationFrame(animateStarfield);
+            }
+            animateStarfield();
+        }
+
+        // Inicjalizacja
+        document.addEventListener('DOMContentLoaded', () => {
+            initStarfield();
+            setLang('pl');
+
+            if (messageEl) {
+                messageEl.addEventListener('animationend', () => messageEl.classList.remove('animate-tada'));
+            }
+            if (scoreWrapper) {
+                scoreWrapper.addEventListener('animationend', () => scoreWrapper.classList.remove('animate-pulse'));
+            }
+            if (solvedWrapper) {
+                solvedWrapper.addEventListener('animationend', () => solvedWrapper.classList.remove('animate-pulse'));
+            }
+
+            if (answerInput) {
+                answerInput.addEventListener('keyup', function(event) {
+                    if (event.key === 'Enter') {
+                        if (checkBtn && !checkBtn.disabled) checkAnswer();
+                        else if (nextBtn && !nextBtn.disabled && (!isTimeMode || timeLeft > 0)) nextProblem();
+                    }
+                });
+
+                answerInput.addEventListener('wheel', function(event) {
+                    event.preventDefault();
+                }, { passive: false });
+            }
+        });
+    </script>
+</body>
+</html>
