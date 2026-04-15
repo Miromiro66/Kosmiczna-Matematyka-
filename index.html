@@ -6,10 +6,10 @@
     <title>Kosmiczna Matematyka dla Dzieci</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Nunito dla gry, Cinzel i Montserrat dla oficjalnego dyplomu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style type="text/tailwindcss">
@@ -140,16 +140,16 @@
         ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #a855f7; }
 
-        /* Wymuszony wygląd Dyplomu przy drukowaniu! */
+        /* --- WYMUSZONY WYGLĄD DYPLOMU PIONOWEGO (PORTRAIT) --- */
         @media print {
-            @page { size: A4 landscape; margin: 0; }
+            @page { size: A4 portrait; margin: 0; }
             body * { visibility: hidden; }
             html, body {
                 width: 100% !important;
                 height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                background-color: #000 !important;
+                background-color: #0b1120 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
@@ -162,45 +162,86 @@
                 width: 100vw !important; 
                 height: 100vh !important; 
                 display: flex !important; 
-                justify-content: flex-start !important; 
+                justify-content: center !important; 
                 align-items: center !important; 
                 margin: 0 !important;
                 padding: 0 !important;
                 z-index: 9999 !important;
-                background-color: #000 !important;
+                background-color: #0b1120 !important; /* Bardzo ciemny granatowy/prawie czarny */
+                font-family: 'Montserrat', sans-serif !important;
             }
-            .print-bg-img {
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
-                object-fit: cover !important;
-                z-index: -2 !important;
-            }
-            /* Cieniowanie tła żeby tekst był czytelny na lewej stronie, a prawa była odsłonięta na rakietę */
-            .print-bg-overlay {
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
-                background: linear-gradient(to right, rgba(5,1,15,0.95) 0%, rgba(5,1,15,0.85) 45%, rgba(5,1,15,0) 100%) !important;
-                z-index: -1 !important;
-            }
-            .print-diploma-content {
+            .print-diploma-border {
                 position: relative !important;
                 z-index: 10 !important;
-                width: 55% !important; 
-                height: 100% !important;
-                padding: 4rem 4rem !important;
+                width: 88% !important; 
+                height: 94% !important;
+                border: 3px solid #d4af37 !important; /* Złota ramka główna */
+                outline: 15px solid rgba(212, 175, 55, 0.1) !important; /* Poświata ramki */
+                outline-offset: -20px !important;
+                padding: 4rem 3rem !important;
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: center !important;
+                align-items: center !important;
                 box-sizing: border-box !important;
-                background: transparent !important;
-                box-shadow: none !important;
-                border: none !important;
+                background: linear-gradient(180deg, #0f172a 0%, #020617 100%) !important; /* Oficjalne tło */
+                box-shadow: inset 0 0 100px rgba(0,0,0,0.8) !important;
+            }
+            .print-title {
+                font-family: 'Cinzel', serif !important;
+                font-size: 3.5rem !important;
+                font-weight: 900 !important;
+                color: #d4af37 !important; /* Złoty oficjalny kolor */
+                margin: 0 0 0.5rem 0 !important;
+                letter-spacing: 0.15em !important;
+            }
+            .print-subtitle {
+                font-family: 'Cinzel', serif !important;
+                font-size: 1.5rem !important;
+                font-weight: 700 !important;
+                color: #e2e8f0 !important; /* Jasny szary/srebrny */
+                text-transform: uppercase !important;
+                letter-spacing: 0.3em !important;
+                margin: 0 0 3rem 0 !important;
+                border-bottom: 1px solid #d4af37 !important;
+                padding-bottom: 1rem !important;
+                width: 80% !important;
+                text-align: center !important;
+            }
+            .print-text {
+                font-family: 'Montserrat', sans-serif !important;
+                color: #94a3b8 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 2px !important;
+                font-size: 1rem !important;
+                margin: 1rem 0 !important;
+            }
+            .print-rank-value {
+                font-family: 'Cinzel', serif !important;
+                font-size: 3.5rem !important;
+                color: #f8fafc !important; /* Czysta biel */
+                margin: 1rem 0 3rem 0 !important;
+                letter-spacing: 0.1em !important;
+            }
+            .print-solved-value {
+                font-family: 'Cinzel', serif !important;
+                font-size: 4rem !important;
+                color: #d4af37 !important;
+                margin: 1rem 0 !important;
+            }
+            .print-footer {
+                width: 100% !important;
+                position: absolute !important;
+                bottom: 4rem !important;
+                padding: 0 4rem !important;
+                box-sizing: border-box !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: flex-end !important;
+            }
+            .print-signature-line {
+                border-bottom: 1px solid #d4af37 !important;
+                width: 250px !important;
+                margin-bottom: 0.5rem !important;
             }
             .no-print { display: none !important; }
             #starfield { display: none !important; }
@@ -493,39 +534,58 @@
 
     </div> <!-- Koniec app-container -->
 
-    <!-- Ukryty szablon dyplomu do druku (REALISTYCZNY KOSMICZNY DESIGN) -->
+    <!-- ================= OFICJALNY, POWAŻNY DYPLOM (PIONOWY) ================= -->
     <div id="diploma-print-area" class="hidden">
-        <!-- Tło Rakieta SpaceX (obraz z Unsplash w wysokiej jakości) -->
-        <img class="print-bg-img" src="https://images.unsplash.com/photo-1517976487492-5750f3195933?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Space Rocket Launchpad">
         
-        <!-- Ciemny gradient (overlay) żeby tekst po lewej stronie był w 100% czytelny -->
-        <div class="print-bg-overlay"></div>
+        <div class="print-diploma-border">
+            
+            <!-- Logo NASA na górze certyfikatu -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" style="width: 130px; margin-bottom: 2rem; position: relative; z-index: 10;" alt="NASA Logo">
 
-        <!-- Ikona / Logo NASA u góry z prawej strony -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" style="position: absolute; top: 40px; right: 50px; width: 120px; z-index: 10;" alt="NASA Logo">
-
-        <div class="print-diploma-content">
-            <div style="text-align: left; margin-top: 1rem;">
-                <h1 style="font-size: 3.5rem; font-weight: 900; color: #facc15 !important; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.1em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
-                <h2 style="font-size: 1.8rem; font-weight: 700; color: #67e8f9 !important; text-transform: uppercase; letter-spacing: 0.2em; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
+            <div style="text-align: center; margin-top: 1rem; width: 100%; position: relative; z-index: 10;">
+                <h1 class="print-title" data-i18n="diplomaTitle1">CERTYFIKAT</h1>
+                <h2 class="print-subtitle" data-i18n="diplomaTitle2">Kosmicznej Matematyki</h2>
                 
-                <p style="font-size: 1.1rem; color: #c7d2fe !important; margin: 2rem 0 0.5rem 0; text-transform: uppercase;" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
-                <div id="print-rank" style="font-size: 3rem; font-weight: 900; color: #e879f9 !important; text-transform: uppercase; margin: 0 0 2rem 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;">Kadet</div>
+                <p class="print-text" data-i18n="diplomaText1">Ten dyplom potwierdza, że posiadacz uzyskał rangę:</p>
+                <div id="print-rank" class="print-rank-value">Kadet</div>
                 
-                <p style="font-size: 1.1rem; color: #c7d2fe !important; margin: 0 0 0.5rem 0; text-transform: uppercase;" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
-                <div id="print-solved" style="font-size: 4.5rem; font-weight: 900; color: #34d399 !important; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;">0</div>
+                <p class="print-text" data-i18n="diplomaText2">Rozwiązano poprawnie zadań:</p>
+                <div id="print-solved" class="print-solved-value">0</div>
             </div>
 
-            <div style="margin-top: auto; border-top: 2px solid rgba(99, 102, 241, 0.5); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end;">
+            <div class="print-footer">
                 <div style="text-align: left;">
-                    <p style="font-size: 1rem; color: #a5b4fc !important; font-weight: bold; text-transform: uppercase; margin: 0;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" style="color: white !important;"></span></p>
-                    <p style="font-size: 0.9rem; color: #818cf8 !important; margin: 0.25rem 0 0 0;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
+                    <p class="print-text" style="font-weight: 700; color: #cbd5e1 !important;"><span data-i18n="diplomaText3">Data misji:</span> <span id="print-date" style="color: #f8fafc !important;"></span></p>
+                    <p class="print-text" style="font-size: 0.8rem !important; color: #64748b !important; text-transform: none !important;" data-i18n="diplomaText4">Gratulacje od Dowództwa Galaktyki!</p>
                 </div>
-                <div style="text-align: left; padding-left: 2rem;">
-                    <p style="font-size: 0.9rem; color: #a5b4fc !important; font-style: italic; font-weight: bold; margin: 0 0 0.25rem 0;">
+                
+                <!-- Złoty Hologram Z Gwarancją Wydruku (SVG) -->
+                <div style="position: absolute; bottom: 3rem; right: 50%; transform: translateX(50%);">
+                    <svg style="width: 140px; height: 140px;" viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#bf953f" />
+                                <stop offset="25%" stop-color="#fcf6ba" />
+                                <stop offset="50%" stop-color="#b38728" />
+                                <stop offset="75%" stop-color="#fbf5b7" />
+                                <stop offset="100%" stop-color="#aa771c" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Kształt wielokątny (pieczęć) -->
+                        <path d="M50 0 L55 15 L70 10 L65 25 L80 25 L75 40 L90 45 L80 55 L90 65 L75 70 L80 85 L65 80 L70 95 L55 90 L50 100 L45 90 L30 95 L35 80 L20 85 L25 70 L10 65 L20 55 L10 45 L25 40 L20 25 L35 25 L30 10 L45 15 Z" fill="url(#goldGradient)" stroke="#fff" stroke-width="1.5" />
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="3,2"/>
+                        <!-- Elementy wewnątrz pieczęci -->
+                        <text x="50" y="55" font-family="'Cinzel', serif" font-size="11" font-weight="900" fill="#5a3c00" text-anchor="middle" letter-spacing="1">OFFICIAL</text>
+                        <text x="50" y="42" font-family="'Cinzel', serif" font-size="22" font-weight="bold" fill="#5a3c00" text-anchor="middle">★</text>
+                    </svg>
+                </div>
+
+                <div style="text-align: right; z-index: 10;">
+                    <div class="print-signature-line"></div>
+                    <p style="font-family: 'Montserrat', sans-serif !important; font-size: 0.8rem !important; color: #d4af37 !important; margin: 0 !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-weight: 600 !important;">
                         <span data-i18n="commander">Dowódca misji (Autor):</span>
                     </p>
-                    <p style="font-size: 1.1rem; color: #e879f9 !important; font-weight: 900; margin: 0;">Mirosław Józef "Miras"</p>
+                    <p style="font-family: 'Cinzel', serif !important; font-size: 1.3rem !important; color: #f8fafc !important; font-weight: 700 !important; margin: 0.5rem 0 0 0 !important;">Mirosław Józef "Miras"</p>
                 </div>
             </div>
         </div>
